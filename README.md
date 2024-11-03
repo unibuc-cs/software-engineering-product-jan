@@ -32,7 +32,7 @@
 ## Features
 <li> Account Creation </li>
 <ul>
-  <li> <I>Input:</I> </li> Account details</li>
+  <li> <I>Input:</I> Account details</li>
   <li> <I>Activation:</I> Press on Sign-up </li>
   <li> <I>Action:</I> A user account is being created</li>
   <li> <I>Output:</I> Gain access to application functionality</li>
@@ -85,9 +85,12 @@ Prioritized backlog is situated in projects on Github, based on the User Stories
 
 ## Design
 <li> UML Diagram</li>
-
+<br/>
 ![338771369-74a8c240-3e70-4619-a06d-5f4fc57b8735](https://github.com/user-attachments/assets/09ca9da1-89c2-4518-ac83-235f4fabb298)
 
+<li> C4 Container Diagram </li>
+<br/>
+![image](https://github.com/user-attachments/assets/ff6e85e7-023e-48cb-a3c8-5c279bed2110)
 
 
 
