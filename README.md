@@ -1,4 +1,15 @@
 # Questify
+
+## Table of contents
+<ol>
+  <li> Product Vision</li>
+  <li> Requirements</li>
+  <li> User Personas</li>
+  <li> Features</li>
+  <li> Backlog </li>
+  <li> Design </li>
+</ol>
+
 ## Product Vision
 <li> <b>FOR</b> people in need of a productivity tool </li> 
 <li> <b>WHO</b> are searchig for motivation and a fun way to stay focused. </li>
@@ -15,7 +26,7 @@
 <li> Should make the user feel like a hero going through their character development </li>
 <li> Should have a slightly social part too, let the user engage with their friends</li>
 
-## Use Personas 
+## User Personas 
 <li> People in need of a productivity tool, regardless of their job or education level, who are searching for motivation and a fun way to stay focused </li>
 
 ## Features
@@ -68,4 +79,15 @@
   <li> <I>Action: </I>Associate two user accounts as being friends </li>
   <li> <I>Output: </I>Display the new friend in the friends list </li>
 </ul>
+
 ## Backlog
+Prioritized backlog is situated in projects on Github, based on the User Stories from Issues
+
+## Design
+<li> UML Diagram</li>
+
+![338771369-74a8c240-3e70-4619-a06d-5f4fc57b8735](https://github.com/user-attachments/assets/09ca9da1-89c2-4518-ac83-235f4fabb298)
+
+
+
+
