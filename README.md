@@ -86,10 +86,12 @@ Prioritized backlog is situated in projects on Github, based on the User Stories
 ## Design
 <li> UML Diagram</li>
 <br/>
-![338771369-74a8c240-3e70-4619-a06d-5f4fc57b8735](https://github.com/user-attachments/assets/09ca9da1-89c2-4518-ac83-235f4fabb298)
+
+![image](https://github.com/user-attachments/assets/97f27a39-0ed2-44b5-b46b-4ddef0836502)
 
 <li> C4 Container Diagram </li>
 <br/>
+
 ![image](https://github.com/user-attachments/assets/ff6e85e7-023e-48cb-a3c8-5c279bed2110)
 
 
