@@ -94,10 +94,11 @@ export default function HomeScreen() {
 			</View>
 			<View style={styles.bottomHalf}>
 				<View style={styles.calendar}>
-					<CalendarSlider
+					{/* Nu mai merge SWIPER dependinta proasta */}
+					{/* <CalendarSlider
 						day={day}
 						setDay={updateDay}
-					/>
+					/> */}
 				</View>
 				{isToday(day) ? (
 					<Text style={styles.tasksTitle}> Today's quests </Text>

@@ -1,5 +1,5 @@
 const { getUserInterests } = require("../repositories/UserRepository");
-const { get } = require("../routes/user");
+const { get } = require("../routes/user_old");
 
 const axios = require('axios').default;
 
