@@ -7,7 +7,7 @@ import {
 	Dimensions
 } from "react-native";
 import moment from "moment";
-import Swiper from "react-native-swiper";
+// import Swiper from "react-native-swiper";
 
 const { width } = Dimensions.get("window");
 

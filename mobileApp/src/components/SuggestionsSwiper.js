@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
-import Swiper from "react-native-deck-swiper";
+// import Swiper from "react-native-deck-swiper";
 import SwipeCard from "./SwipeCard";
 
 const { width, height } = Dimensions.get('window');
