@@ -15,162 +15,100 @@ export const useTasksContext = () => {
 };
 
 export const TasksContextProvider = ({ children }) => {
+
   const { user } = useAuthContext();
 
+  const [activities, setActivities] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [habits, setHabits] = useState([]);
+  const [recurrentTasks, setRecurrentTasks] = useState([]);
 
-  const getAllUserTasks = async () => {
+  const getAllUserActivities = async () => {
+    console.log("User", user);
     try {
       const response = await axios.get(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/all/tasks/${user.uid}`,
+        `http://192.168.1.3:4000/api/activities/${user.uid}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-
-      console.log("All tasks response:", response.data); // Log the response
-
+      console.log("Activities response:", response.data); // Log the response
+      setActivities(response.data);
+      filterByType();
       return response.data;
     } catch (error) {
       console.log(
-        "Error fetching all tasks:",
+        "Error fetching user activities:",
         error.response ? error.response.data : error.message
       );
     }
   };
 
-  const getUserHabits = async () => {
-    try {
-      const response = await axios.get(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/habits/${user.uid}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Habits response:", response.data); // Log the response
-      return response.data;
-    } catch (error) {
-      console.log(
-        "Error fetching habits:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
+  const filterByType = () => {
 
-  const getUserRecurrentTasks = async () => {
-    try {
-      const response = await axios.get(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/reccuring/${user.uid}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Recurrent tasks response:", response.data); // Log the response
-      return response.data;
-    } catch (error) {
-      console.log(
-        "Error fetching recurring tasks:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
+    setHabits(activities.filter((activity) => activity.type === "habit"));
+    setRecurrentTasks(
+      activities.filter((activity) => activity.type === "reccuring")
+    );
+    setTasks(activities.filter((activity) => activity.type === "one-time"));
 
-  const getTodaysTasks = async () => {
-    try {
-      const response = await axios.get(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/tasks/${user.uid}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Tasks response:", response.data); // Log the response
-      return response.data;
-    } catch (error) {
-      console.log(
-        "Error fetching today's tasks:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
+  }
 
-  const deleteTask = async (id) => {
-    try {
-      const response = await axios.delete(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/tasks/${user.id}/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Delete task response:", response.data); // Log the response
-      return response.data;
-    } catch (error) {
-      console.log(
-        "Error deleting task:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
 
-  const createTask = async (task) => {
+
+  const createNewActivity = async (activity) => {
     try {
       const response = await axios.post(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/tasks/${user.id}`,
-        task,
+        `http://localhost:4000/api/user/activities`,
+        activity,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      console.log("Create task response:", response.data); // Log the response
+      console.log("Create activity response:", response.data); // Log the response
       return response.data;
     } catch (error) {
       console.log(
-        "Error creating task:",
+        "Error creating activity:",
         error.response ? error.response.data : error.message
       );
     }
-  };
+  }
 
-  getSuggestions = async () => {
+
+  const deleteActivity = async (activityId) => {
     try {
-      const response = await axios.get(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/suggest/${user.uid}`,
+      const response = await axios.delete(
+        `http://localhost:4000/api/user/activities/${activityId}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      console.log("Tasks response:", response.data); // Log the response
+      console.log("Delete activity response:", response.data); // Log the response
       return response.data;
     } catch (error) {
       console.log(
-        "Error fetching today's tasks:",
+        "Error deleting activity:",
         error.response ? error.response.data : error.message
       );
     }
-  };
+  }
+
 
   const state = {
+    activities,
     tasks,
-    setTasks,
-    getTodaysTasks,
-    deleteTask,
-    createTask,
-    getUserHabits,
-    getUserRecurrentTasks,
-    getAllUserTasks,
+    habits,
+    recurrentTasks,
+    createNewActivity,
+    getAllUserActivities,
+    deleteActivity
   };
 
   return (
