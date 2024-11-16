@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import Task from "./Task";
-import { useTasksContext } from "../contexts/tasks.context";
+// import { useTasksContext } from "../contexts/tasks.context";
 
 export default function TaskList({ tasks, scheduled, date }) {
   const [userTasks, setUserTasks] = useState(null);
-  const { getTodaysTasks, getAllUserTasks } = useTasksContext();
+  // const { getTodaysTasks, getAllUserTasks } = useTasksContext();
 
   // checks that two Date objects have the same date (and not necessarily the same time)
   const checkEqualDates = (date1, date2) => {
@@ -60,21 +60,22 @@ export default function TaskList({ tasks, scheduled, date }) {
       );
       setUserTasks(data);
     } else if (date !== undefined) {
-      getTodaysTasks().then((data) => {
-        setUserTasks(data);
-      });
+    //   getTodaysTasks().then((data) => {
+    //     setUserTasks(data);
+    //   });
     } else {
-      getAllUserTasks().then((data) => {
-        const dataFiltered = data.filter((task) => {
-          if (scheduled) {
-            return task.due_date != null;
-          } else {
-            return task.due_date == null;
-          }
-        });
+    //   getAllUserTasks().then((data) => {
+    //     const dataFiltered = data.filter((task) => {
+    //       if (scheduled) {
+    //         return task.due_date != null;
+    //       } else {
+    //         return task.due_date == null;
+    //       }
+    //     });
 
-        setUserTasks(dataFiltered);
-      });
+    //     setUserTasks(dataFiltered);
+    //   });
+        setUserTasks(tasks)
     }
   }, [date]); // dependent on the date
 

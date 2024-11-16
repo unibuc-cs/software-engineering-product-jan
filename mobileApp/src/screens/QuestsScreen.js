@@ -5,7 +5,6 @@ import SuggestionsCard from "../components/SuggestionsCard";
 import FriendsChallenges from "../components/FriendsChallenges";
 
 export default function QuestsScreen() {   
-    const stats =[]
 
     return (
         <SafeAreaView style = {styles.container}>
@@ -14,12 +13,6 @@ export default function QuestsScreen() {
                     <Text style = {styles.title}> QuestBook </Text>
                 </View>
                 <TasksCarousel style = {styles.carouselContainer} />
-                {/* <TaskList style={styles.taskContainer} /> 
-                <Card
-                    title="Title of a task"
-                    description="A very cool description"
-                    stats={stats}
-                />*/}
                 <FriendsChallenges/>
                 <SuggestionsCard />
             </ScrollView>

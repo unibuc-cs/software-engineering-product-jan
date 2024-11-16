@@ -1,133 +1,115 @@
 import { View, StyleSheet, Text } from "react-native";
 
-export default function TaskCard({ task }) {
-  const renderWeekdays = (day, index) => {
-    console.log(task);
-    console.log(task.days_per_week);
+export default function TaskCard({task}) {
+
+    const taskStatus = task.status ? "Done" : "Ongoing...";
+    const statusColor = task.status ? "#CEDEFE" : "#C7B0A0";
+  
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${day}/${month}/${year}`;
+    };
+
+    const renderWeekday = (day, index) => {
+        return (
+            <Text style={[styles.day, task.days_of_the_week[index] === "1" && styles.pickedDay]}>
+                {day}
+            </Text>
+        );
+    };
+
     return (
-      <Text
-        style={[styles.day, task.days_per_week[index] === "1" && styles.pickedDay,]}
-      >
-       {day}
-      </Text>
+        <>
+        <View style = {styles.shadow}></View>
+        <View style = {styles.taskDetails}>
+            {task.type == "daily" && (
+                <View style = {styles.row}>
+                    {/* Date Section */}
+                    <View style = {[styles.sectionWrapper, {flex: 1}]}>
+                        <Text style = {styles.sectionTitle}> Date </Text>
+                        <Text style = {styles.sectionContent}>
+                            {formatDate(new Date(task.created_at))}
+                        </Text>
+                    </View>
+                    {/* Status Section */}
+                    <View style = {[styles.sectionWrapper, {flex: 1}]}>
+                        <Text style = {styles.sectionTitle}> Status </Text>
+                        <Text style = {[styles.sectionContent, {color: statusColor, fontWeight: "bold"}]}>
+                            {taskStatus}
+                        </Text>
+                    </View>
+                </View>
+            )}
+            {(task.type === "habit" || task.type === "recurring") && (
+                <View style = {styles.row}>
+                    {/* Frequency Section */}
+                    <View style = {[styles.sectionWrapper, {flex: 1.25}]}>
+                        <Text style = {styles.sectionTitle}> Frequency </Text>
+                        <Text style = {styles.sectionContent}>
+                            Every {task.frequency} week(s)
+                        </Text>
+                    </View>
+                    {/* Days of the Week Section */}
+                    <View style = {[styles.sectionWrapper, {flex: 1}]}>
+                        <Text style = {styles.sectionTitle}></Text>
+                        <View style = {styles.daysWrapper}>
+                            {renderWeekday("M", 0)}
+                            {renderWeekday("T", 1)}
+                            {renderWeekday("W", 2)}
+                            {renderWeekday("T", 3)}
+                            {renderWeekday("F", 4)}
+                            {renderWeekday("S", 5)}
+                            {renderWeekday("S", 6)}
+                        </View>
+                    </View>
+                </View>
+            )}
+            {/* Stats Section */}
+            <View style={[styles.sectionWrapper, {flex: 2}]}>
+            <Text style={styles.sectionTitle}> Stats </Text>
+            <View style={styles.statsWrapper}>
+                <View>
+                <View style={styles.stat}>
+                    <Text style={styles.statName}> Fitness </Text>
+                    <Text style={styles.statValue}> + {task.stats.fitness} </Text>
+                </View>
+                <View style={styles.stat}>
+                    <Text style={styles.statName}> Intelligence </Text>
+                    <Text style={styles.statValue}> + {task.stats.intelligence} </Text>
+                </View>
+                </View>
+                <View>
+                <View style={styles.stat}>
+                    <Text style={styles.statName}> Wellness </Text>
+                    <Text style={styles.statValue}> + {task.stats.wellness} </Text>
+                </View>
+                <View style={styles.stat}>
+                    <Text style={styles.statName}> Skill </Text>
+                    <Text style={styles.statValue}> + {task.stats.skill} </Text>
+                </View>
+                </View>
+            </View>
+            </View>
+            {/* Description Section */}
+            <View style = {{flex: 1.5}}>
+                <Text style = {styles.sectionTitle}> Description </Text>
+                <Text style = {styles.sectionContent}> {task.description} </Text>
+            </View>
+        </View>
+        </>
     );
-  };
-
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${day}/${month}/${year}`;
-  };
-
-  return (
-    <>
-      <View style={styles.shadow}></View>
-      <View style={styles.taskDetails}>
-        {task.type == "daily" && (
-          <View style={styles.sectionWrapper}>
-            <Text style={styles.sectionTitle}>Date</Text>
-            <View style={styles.sectionContentWrapper}>
-              <Text style={styles.sectionContent}>
-                {formatDate(new Date(task.created_at))}
-              </Text>
-            </View>
-          </View>
-        )}
-        {(task.type === "habit" ||
-          task.type === "recurring" ||
-          task.type === "Recurring") && (
-          <View style={styles.row}>
-            <View style={styles.sectionWrapper}>
-              <Text style={styles.sectionTitle}>Frequency</Text>
-              <View style={styles.sectionContentWrapper}>
-                <Text style={styles.sectionContent}>
-                  Every {task.week_interval} week(s)
-                </Text>
-              </View>
-            </View>
-            <View style={styles.sectionWrapper}>
-              <Text style={styles.sectionTitle}>Days</Text>
-              <View style={styles.daysWrapper}>
-                {renderWeekdays("M", 0)}
-                {renderWeekdays("T", 1)}
-                {renderWeekdays("W", 2)}
-                {renderWeekdays("T", 3)}
-                {renderWeekdays("F", 4)}
-                {renderWeekdays("S", 5)}
-                {renderWeekdays("S", 6)}
-              </View>
-            </View>
-          </View>
-        )}
-        <View style={styles.row}>
-          <View style={styles.sectionWrapper}>
-            <Text style={styles.sectionTitle}>Category</Text>
-            <View style={styles.sectionContentWrapper}>
-              {task.type === "daily" ? (
-                <Text style={styles.sectionContent}> Task </Text>
-              ) : task.type === "habit" ? (
-                <Text style={styles.sectionContent}> Habit </Text>
-              ) : (
-                <Text style={styles.sectionContent}> Recurring </Text>
-              )}
-            </View>
-          </View>
-          {task.type !== "daily" && task.type !== "habit" && (
-            <View style={styles.sectionWrapper}>
-              <Text style={styles.sectionTitle}>End Date</Text>
-              <View style={styles.sectionContentWrapper}>
-                <Text style={styles.sectionContent}>
-                  {" "}
-                  {formatDate(new Date(task.due_date))}{" "}
-                </Text>
-              </View>
-            </View>
-          )}
-        </View>
-        <View style={styles.sectionWrapper}>
-          <Text style={styles.sectionTitle}>Description</Text>
-          <View style={styles.sectionContentWrapper}>
-            <Text style={styles.sectionContent}>{task.description}</Text>
-          </View>
-        </View>
-        <View style={styles.statsContainer}>
-          <Text style={styles.sectionTitle}> Stats </Text>
-          <View style={styles.statsWrapper}>
-            <View>
-              <View style={styles.stat}>
-                <Text style={styles.statName}> Fitness </Text>
-                <Text style={styles.statValue}> +{task.fitness} </Text>
-              </View>
-              <View style={styles.stat}>
-                <Text style={styles.statName}> Intelligence </Text>
-                <Text style={styles.statValue}> +{task.intelligence} </Text>
-              </View>
-            </View>
-            <View>
-              <View style={styles.stat}>
-                <Text style={styles.statName}> Wellness </Text>
-                <Text style={styles.statValue}> +{task.wellness} </Text>
-              </View>
-              <View style={styles.stat}>
-                <Text style={styles.statName}> Skill </Text>
-                <Text style={styles.statValue}> +{task.skill} </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-    </>
-  );
 }
 
 const styles = StyleSheet.create({
   taskDetails: {
     position: "absolute",
-    height: "75%",
+    height: "85%",
     width: "80%",
     alignSelf: "center",
     paddingHorizontal: "7%",
+    paddingVertical: "3%",
     borderWidth: 1,
     borderRadius: 24,
     borderColor: "#C7B0A0",
@@ -137,7 +119,7 @@ const styles = StyleSheet.create({
     top: 2,
     left: 41,
     width: "80%",
-    height: "75%",
+    height: "85%",
     backgroundColor: "black",
     borderRadius: 24,
   },
@@ -146,54 +128,52 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   sectionWrapper: {
-    flex: 1,
     borderBottomWidth: 1,
-    borderColor: "black",
+    borderColor: "#C7B0A0",
     borderStyle: "dashed",
   },
   sectionTitle: {
     marginTop: 10,
+    paddingBottom: 5,
     fontSize: 15,
     fontWeight: "200",
-  },
-  sectionContentWrapper: {
-    flex: 1,
-    justifyContent: "center",
-    paddingBottom: 4,
-  },
-  daysWrapper: {
-    flex: 1,
-    paddingBottom: 4,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  day: {
-    fontSize: 14,
-    paddingHorizontal: 2,
-  },
-  pickedDay: {
-    backgroundColor: "#cedefe",
-    borderRadius: 10,
+    letterSpacing: 3,
   },
   sectionContent: {
+    flex: 1,
     fontSize: 14,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
   },
-  statsContainer: {
-    flex: 1.5,
+  daysWrapper: {
+    marginTop: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  day: {
+    fontSize: 10,
+    paddingHorizontal: 4,
+    marginHorizontal: 0.5,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: "black",
+  },
+  pickedDay: {
+    backgroundColor: "#CEDEFE",
   },
   statsWrapper: {
-    paddingHorizontal: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    paddingHorizontal: 25,
   },
   stat: {
     flexDirection: "row",
-    marginVertical: 5,
     justifyContent: "space-between",
+    marginVertical: 3,
   },
-  statName: {},
+  statName: {
+    letterSpacing: 1,
+  },
   statValue: {
     fontWeight: "500",
+    color: "#E49773",
   },
 });

@@ -15,8 +15,8 @@ import Card from "./Card";
 import Button1 from "./Button1";
 
 export default function TasksCarousel() {
-  const { getUserHabits, getUserRecurrentTasks, getTodaysTasks } =
-    useTasksContext();
+//   const { getUserHabits, getUserRecurrentTasks, getTodaysTasks } =
+//     useTasksContext();
 
   const [tasks, setTasks] = useState([]);
   const [habits, setHabits] = useState([]);
@@ -26,19 +26,19 @@ export default function TasksCarousel() {
   const navigation = useNavigation();
   const [filter, setFilter] = useState("Tasks");
 
-  useEffect(() => {
-    getTodaysTasks().then((data) => {
-      setTasks(data);
-    });
+//   useEffect(() => {
+//     getTodaysTasks().then((data) => {
+//       setTasks(data);
+//     });
 
-    getUserHabits().then((data) => {
-      setHabits(data);
-    });
+//     getUserHabits().then((data) => {
+//       setHabits(data);
+//     });
 
-    getUserRecurrentTasks().then((data) => {
-      setRecurrentTasks(data);
-    });
-  }, []);
+//     getUserRecurrentTasks().then((data) => {
+//       setRecurrentTasks(data);
+//     });
+//   }, []);
 
   useEffect(() => {
     let allTasks = [];
