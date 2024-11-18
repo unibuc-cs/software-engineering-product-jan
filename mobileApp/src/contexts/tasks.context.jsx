@@ -27,7 +27,7 @@ export const TasksContextProvider = ({ children }) => {
     console.log("User", user);
     try {
       const response = await axios.get(
-        `http://192.168.1.3:4000/api/activities/${user.uid}`,
+        `http://192.168.42.156:4000/api/activities/${user.uid}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -58,10 +58,48 @@ export const TasksContextProvider = ({ children }) => {
 
 
 
+  /*
+
+  Activity structure:
+
+  // activities collection schema
+{
+  "activity_id": "string",          // Unique identifier for the activity
+  "user_id": "string",              // ID of the user who owns the activity
+  "title": "string",                // Title of the activity
+  "description": "string",          // (Optional) Detailed description
+  "type": "string",                 // "one-time" or "recurring"
+  "frequency": "integer or null",    // (Optional) Once every how many weeks the recurring tasks / habit happens
+  "days_of_the_week": "string or null" // Marks the days of the week a recurring task / habit happens
+  "due_date": "timestamp or null",  // (Optional) Specific due date for the activity
+  "status": "bool",                 // Current status: done or not
+  "from_buddy": "string or null",   // (Optional) ID of the buddy who recommended the activity
+  "created_at": "timestamp",        // Timestamp when the activity was created
+  "last_completed_at": "timestamp or null", // (Optional) Timestamp of the last completion
+  "completion_history": [           // (Optional) Array of completion records
+    {
+      "date": "timestamp",          // When the activity was completed or skipped
+      "status": "string"            // "completed" or "skipped"
+    }
+    // ... more records
+  ],
+  "stats": {
+		"fitness": "integer",
+		"skill": "integer",
+		"wellness": "integer",
+		"inteligence": "integer",
+	},
+	"emoji": "string",
+}
+
+
+  */
+
+
   const createNewActivity = async (activity) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/api/user/activities`,
+        `http://192.168.42.156:4000/api/activities`,
         activity,
         {
           headers: {
@@ -83,7 +121,7 @@ export const TasksContextProvider = ({ children }) => {
   const deleteActivity = async (activityId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/user/activities/${activityId}`,
+        `http://192.168.42.156:4000/api/activities/${activityId}`,
         {
           headers: {
             "Content-Type": "application/json",

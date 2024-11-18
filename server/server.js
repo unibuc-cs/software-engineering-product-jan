@@ -18,7 +18,7 @@ app.locals.db = db;
 const auth = admin.auth();
 app.locals.auth = auth;
 
-
+db.settings({ ignoreUndefinedProperties: true })
 
 app.use(cors());
 app.use(bodyParser.json());
