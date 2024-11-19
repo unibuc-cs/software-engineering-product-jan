@@ -8,7 +8,7 @@ export default function Task({ id, item, title, emoji, state, showCheckbox }) {
   const [isSelected, setSelection] = useState(false);
 
   return (
-    <TouchableWithoutFeedback onPress = {() => navigation.navigate("Task", {taskId : id, task: item})}>
+    <TouchableWithoutFeedback onPress = {() => navigation.navigate("Task", {task: item})}>
       <View style={styles.container}>
         <View style={styles.titleWrapper}>
           <Text style={styles.emojiWrapper}>{emoji}</Text>

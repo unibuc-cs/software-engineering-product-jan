@@ -1,3 +1,5 @@
+
+
 async function createUser(req,res) {
     // create user
     const { name,age,interests} = req.body;

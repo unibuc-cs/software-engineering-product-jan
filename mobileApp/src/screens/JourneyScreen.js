@@ -40,12 +40,12 @@ const JourneyScreen = () => {
 
   const [allTasks, setAllTasks] = useState([]);
 
-  const { getAllUserTasks } = useTasksContext();
+  const { getAllUserActivities } = useTasksContext();
 
   // prepare the data so that you can send it to Month Path, which in turn sends it to 
   // each pop up
   useEffect(() => {
-      getAllUserTasks().then((data) => {
+      getAllUserActivities().then((data) => {
         setAllTasks(data);
       })
   }, []);

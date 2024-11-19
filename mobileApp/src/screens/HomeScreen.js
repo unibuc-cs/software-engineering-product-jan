@@ -5,14 +5,11 @@ import {
 	View,
 	StyleSheet,
 	Text,
-	Touchable,
-	TouchableOpacity,
 	Image
 } from "react-native";
 import { useNavigationState } from "@react-navigation/native";
 
 import Stats from "../components/Stats";
-import CalendarSlider from "../components/CalendarSlider";
 import TaskList from "../components/TaskList";
 import { useEffect, useState } from "react";
 import { useTasksContext } from "../contexts/tasks.context";
@@ -26,12 +23,12 @@ export default function HomeScreen() {
 
 	const [allTasks, setAllTasks] = useState([]);
 
-	const { getAllUserTasks } = useTasksContext();
+	const { getAllUserActivities } = useTasksContext();
 
 	// prepare the data so that you can send it to Month Path, which in turn sends it to
 	// each pop up
 	useEffect(() => {
-		getAllUserTasks().then((data) => {
+		getAllUserActivities().then((data) => {
 			setAllTasks(data);
 		});
 	}, [currentRoute]);

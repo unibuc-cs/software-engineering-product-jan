@@ -3,11 +3,11 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const functions = require("firebase-functions");
-var admin = require("firebase-admin");
+const admin = require("firebase-admin");
 
 const port = process.env.PORT || 4000;
 
-var serviceAccount = require("./firebaseSDK.json");
+const serviceAccount = require("./firebaseSDK.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -18,7 +18,7 @@ app.locals.db = db;
 const auth = admin.auth();
 app.locals.auth = auth;
 
-
+db.settings({ ignoreUndefinedProperties: true })
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -28,7 +28,11 @@ app.use(express.json());
 
 //Routes
 const userRouter = require("./routes/user.js");
+const activitiesRouter = require("./routes/activities.js");
+
+
 app.use("/api/user", userRouter);
+app.use("/api/activities", activitiesRouter);
 
 
 app.listen(port, () => {
