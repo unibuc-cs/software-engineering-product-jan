@@ -138,6 +138,31 @@ export const TasksContextProvider = ({ children }) => {
     }
   }
 
+  //expected changes structure: [{ "field1": "value1", "field2": "value2", ... }] 
+  const editActivity = async (activityId, changes = {}) => {
+
+    try {
+      const response = await axios.put(
+        `http://192.168.10.3:4000/api/activities/${activityId}`,
+        changes,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Edit activity response:", response.data); // Log the response
+      return response.data;
+
+  }
+  catch (error) {
+    console.log(
+      "Error editing activity:",
+      error.response ? error.response.data : error.message
+    );
+  }
+
+}
 
   const state = {
     activities,
@@ -146,7 +171,8 @@ export const TasksContextProvider = ({ children }) => {
     recurrentTasks,
     createNewActivity,
     getAllUserActivities,
-    deleteActivity
+    deleteActivity,
+    editActivity,
   };
 
   return (
