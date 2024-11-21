@@ -1,12 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { useAuthContext } from "../contexts/auth.context";
 import {
-  Button,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
+	Button,
+	View,
+	StyleSheet,
+	Text,
+	Image,
+    TouchableOpacity
 } from "react-native";
 import { useNavigationState } from "@react-navigation/native";
 
@@ -82,27 +82,26 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.topHalf}>
         <View style={styles.leftQuarter}>
-			<TouchableOpacity onPress={handleLogout}>
-				<Image
-				source={require("../../assets/logout.png")}
-				style={styles.logout}
-				/>
-			</TouchableOpacity>
+            <TouchableOpacity onPress={handleLogout}>
+                <Image
+                source={require("../../assets/logout.png")}
+                style={styles.logout}
+                />
+            </TouchableOpacity>
           	<View style={styles.characterContainer}>
             	<Image
               	source={require("../../assets/boy.png")}
               	style={styles.character}
-            />
-        </View>
+                />
+            </View>
         </View>
         <View style={styles.rightQuarter}>
           <View style={styles.chest}>
-            {/* <TouchableOpacity
-								style={styles.logoutButton}
-								onPress={logout}
-							>
-							<Text>Logout</Text>
-						</TouchableOpacity> */}
+            <TouchableOpacity 
+                style={styles.onboardingButton} 
+                onPress={() => navigation.navigate("Onboarding")}>
+                    <Text> Onboarding </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.stats}>
             <Stats />
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   },
   chest: {
     flex: 2,
-    justifyContent: "center",
+    justifyContent: "flex-end",
   },
   stats: {
     flex: 3,
@@ -193,12 +192,12 @@ const styles = StyleSheet.create({
   tasks: {
     flex: 2,
   },
-  //   logoutButton: {
-  //     marginBottom: 10,
-  //     backgroundColor: "#f1948a",
-  //     padding: 10,
-  //     borderRadius: 10,
-  //   },
+    onboardingButton: {
+        marginBottom: 10,
+        backgroundColor: "#f1948a",
+        padding: 10,
+        borderRadius: 10,
+    },
   logout: {
     position: "absolute",
     top: 50,

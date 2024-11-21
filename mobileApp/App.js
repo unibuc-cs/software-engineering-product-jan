@@ -26,6 +26,7 @@ import TaskScreen from "./src/screens/TaskScreen.js";
 import LoginScreen from "./src/screens/LoginScreen";
 import Task from "./src/components/Task.js";
 import { TasksContextProvider } from "./src/contexts/tasks.context.jsx";
+import OnboardingScreen from "./src/screens/OnboardingScreen.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ function MainNavigator() {
   }
 
   const shouldShowNavbar =
-    currentRoute !== "Login" && currentRoute !== "Register";
+    currentRoute !== "Login" && currentRoute !== "Register" && currentRoute !== "Onboarding";
 
   return (
     <>
@@ -95,6 +96,11 @@ function MainNavigator() {
               name="Task"
               component={TaskScreen}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Onboarding"
+                component={OnboardingScreen}
+                options={{ headerShown: false }}
             />
           </>
         ) : (
