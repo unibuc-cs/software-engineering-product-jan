@@ -12,6 +12,7 @@ import { useNavigationState } from "@react-navigation/native";
 
 import Stats from "../components/Stats";
 import TaskList from "../components/TaskList";
+import LogOut from "../components/LogOut";
 import { useEffect, useState } from "react";
 import { useTasksContext } from "../contexts/tasks.context";
 
@@ -82,12 +83,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.topHalf}>
         <View style={styles.leftQuarter}>
-            <TouchableOpacity onPress={handleLogout}>
-                <Image
-                source={require("../../assets/logout.png")}
-                style={styles.logout}
-                />
-            </TouchableOpacity>
+            <LogOut />  
           	<View style={styles.characterContainer}>
             	<Image
               	source={require("../../assets/boy.png")}
@@ -154,11 +150,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   },
   characterContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 1,
   },
   character: {
     marginTop: "30%",
@@ -198,9 +196,4 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
     },
-  logout: {
-    position: "absolute",
-    top: 50,
-    left: -80,
-  },
 });
