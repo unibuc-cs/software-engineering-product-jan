@@ -1,5 +1,5 @@
 const {updateUserStats,getUserStats} = require("../services/statsService");
-
+const {suggestTask} = require("../services/TaskSugestions_old");
 async function createUser(req,res) {
     console.log("create user");
     // create user
@@ -119,6 +119,12 @@ async function updateStats(req,res) {
     }
 }
 
+async function suggestUserTask(req,res) {
+    const userId = "randomUserId"
+    console.log("suggest user task");
+    const taskSuggestions = await suggestTask();
+    res.status(200).json(taskSuggestions);
+}
 
 
 module.exports = {
@@ -128,6 +134,7 @@ module.exports = {
     updateUser,
     deleteUser,
     getStats,
-    updateStats
+    updateStats,
+    suggestUserTask
 
 };
