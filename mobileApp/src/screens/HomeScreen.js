@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useAuthContext } from "../contexts/auth.context";
 import {
-	Button,
 	View,
 	StyleSheet,
 	Text,
@@ -10,6 +9,7 @@ import {
 } from "react-native";
 import { useNavigationState } from "@react-navigation/native";
 
+import CalendarSlider from "../components/CalendarSlider";
 import Stats from "../components/Stats";
 import TaskList from "../components/TaskList";
 import LogOut from "../components/LogOut";
@@ -106,16 +106,12 @@ export default function HomeScreen() {
       </View>
       <View style={styles.bottomHalf}>
         <View style={styles.calendar}>
-          {/* Nu mai merge SWIPER dependinta proasta */}
-          {/* <CalendarSlider
-						day={day}
-						setDay={updateDay}
-					/> */}
+          <CalendarSlider day={day} setDay={updateDay} />
         </View>
         {isToday(day) ? (
           <Text style={styles.tasksTitle}> Today's quests </Text>
         ) : (
-          <Text style={styles.tasksTitle}> Quests for {formatDate(day)}</Text>
+          <Text style={styles.tasksTitle}> Quests for {formatDate(day)} </Text>
         )}
         {/* we'll need the tasks list to receive the day we selected and filter only those tasks*/}
         <View style={styles.tasks}>
