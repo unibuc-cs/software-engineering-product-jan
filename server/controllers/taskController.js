@@ -50,6 +50,40 @@ async function getUserActivities(req, res) {
 */
 
 
+
+async function editActivity(req, res) {
+    const db = req.app.locals.db;
+
+    const id = req.params.id;
+
+    const {...changes} = req.body;
+
+    console.log(changes);
+
+    const activityFieldsToChange = Object.keys(changes);
+
+    const activity = await db.collection("activities").doc(id).get();
+
+    if (!activity.exists) {
+        return res.status(404).json({ error: "Activity not found" });
+    }
+
+    const activityData = activity.data();
+
+    activityFieldsToChange.forEach((field) => {
+        activityData[field] = changes[field];
+    });
+
+    try {
+        await db.collection("activities").doc(id).update(activityData);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+
+    res.status(200).json({ message: "Activity updated" });
+}
+
+
 async function createActivity(req, res) {
     const db = req.app.locals.db;
     const {
@@ -118,5 +152,6 @@ async function deleteActivity(req, res) {
 module.exports = {
     getUserActivities,
     createActivity,
-    deleteActivity
+    deleteActivity,
+    editActivity
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 export default function SwipeCard({object}) {
+    console.log("Object:", object);
     if(object == undefined) 
     {
         console.log("Tried to show undefined card!");
@@ -14,12 +15,12 @@ export default function SwipeCard({object}) {
                     <View style = {styles.card}>
                         <View style = {styles.top}>
                             <Text style = {styles.title}> 
-                                {object.suggestion.title}
+                                {object.title}
                             </Text>
                         </View>
                         <View style = {styles.descriptionWrapper}>
                             <Text style = {styles.description}>
-                                {object.suggestion.description}
+                                {object.description}
                             </Text>
                         </View>
                     </View>
