@@ -9,6 +9,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   Pressable,
+  Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 import ToggleSwitch from "../components/ToggleSwitch";
 import { useAuthContext } from "../contexts/auth.context";
@@ -57,42 +59,45 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.bigcontainer}>
-      <ImageBackground
-        source={require(backgroundImage)}
-        style={{ width: "100%", height: "100%" }}
-      >
-        <View style={styles.imageContainer}>
-          <Image
-            source={require(happyPeople)} // Local image
-            style={styles.image}
-          />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <View style={styles.bigcontainer}>
+        <ImageBackground
+          source={require(backgroundImage)}
+          style={{ width: "100%", height: "100%" }}
+        >
+          <View style={styles.imageContainer}>
+            <Image
+              source={require(happyPeople)} // Local image
+              style={styles.image}
+            />
 
-          <ToggleSwitch></ToggleSwitch>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.title}>Welcome back!</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={form.email}
-            onChangeText={handleEmailChange}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry
-            value={form.password}
-            onChangeText={handlePasswordChange}
-          />
-          {errorMessage ? (
-            <Text style={styles.error}>{errorMessage}</Text>
-          ) : null}
-          <TouchableOpacity onPress={handleSubmit} style={styles.touch}>
-            <Text style={styles.button}>Login</Text>
-          </TouchableOpacity>
-          <View>
-            {/* <Pressable
+            <ToggleSwitch></ToggleSwitch>
+          </View>
+          <View style={styles.container}>
+            <Text style={styles.title}>Welcome back!</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={form.email}
+              onChangeText={handleEmailChange}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+              value={form.password}
+              onChangeText={handlePasswordChange}
+            />
+            {errorMessage ? (
+              <Text style={styles.error}>{errorMessage}</Text>
+            ) : null}
+            <TouchableOpacity onPress={handleSubmit} style={styles.touch}>
+              <Text style={styles.button}>Login</Text>
+            </TouchableOpacity>
+            <View>
+              {/* <Pressable
               style={styles.registerButton}
               onPress={() => {
                 navigation.navigate("Register");
@@ -102,10 +107,11 @@ export default function Login() {
                 Don't have an account? Register now
               </Text>
             </Pressable> */}
+            </View>
           </View>
-        </View>
-      </ImageBackground>
-    </View>
+        </ImageBackground>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "black",
     borderRadius: 10,
     backgroundColor: "#fff",
   },
@@ -146,15 +152,15 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 10,
+    borderColor: "black",
+    borderRadius: 20,
     textAlign: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#E49773",
   },
   touch: {
-    width: "80%",
+    width: "50%",
     backgroundColor: "#fff",
-    borderRadius: 10,
+    borderRadius: 20,
   },
   error: {
     color: "red",
@@ -167,7 +173,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 4,
     alignItems: "center",
-    marginTop: "20%",
+    marginTop: "10%",
     marginBottom: "0%",
   },
   bigcontainer: {

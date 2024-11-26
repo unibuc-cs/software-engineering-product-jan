@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useRef, useEffect } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -7,28 +7,32 @@ import {
   Animated,
   StyleSheet,
   Dimensions,
-  Pressable,
 } from "react-native";
 
 const { width } = Dimensions.get("window");
 
 export default function ToggleSwitch() {
-  const [selected, setSelected] = useState("existing");
-  const slideAnim = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const route = useRoute();
+  const slideAnim = useRef(new Animated.Value(0)).current;
+
+  const isLoginPage = route.name === "Login";
 
   useEffect(() => {
     Animated.spring(slideAnim, {
-      toValue: selected === "existing" ? 0 : 1,
+      toValue: isLoginPage ? 0 : 1,
       useNativeDriver: true,
       tension: 100,
       friction: 10,
     }).start();
-  }, [selected, slideAnim]);
+  }, [isLoginPage, slideAnim]);
 
-  const handleToggle = (value) => {
-    setSelected(value);
-  };
+  const handleToggle = useCallback(
+    (routeName: string) => {
+      navigation.navigate(routeName);
+    },
+    [navigation]
+  );
 
   const translateX = slideAnim.interpolate({
     inputRange: [0, 1],
@@ -48,36 +52,21 @@ export default function ToggleSwitch() {
         />
         <TouchableOpacity
           style={styles.toggleButton}
-          onPress={() => handleToggle("existing")}
+          onPress={() => handleToggle("Login")}
         >
-          <Text
-            style={[
-              styles.buttonText,
-              selected === "existing" && styles.selectedText,
-            ]}
-          >
+          <Text style={[styles.buttonText, isLoginPage && styles.selectedText]}>
             Existing
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.toggleButton}
-          onPress={() => handleToggle("new")}
+          onPress={() => handleToggle("Register")}
         >
-          <Pressable
-            style={styles.registerButton}
-            onPress={() => {
-              navigation.navigate("Register");
-            }}
+          <Text
+            style={[styles.buttonText, !isLoginPage && styles.selectedText]}
           >
-            <Text
-              style={[
-                styles.buttonText,
-                selected === "new" && styles.selectedText,
-              ]}
-            >
-              New
-            </Text>
-          </Pressable>
+            New
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -89,8 +78,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "0%",
-    padding: "0%",
+    marginBottom: 0,
+    padding: 0,
   },
   toggleContainer: {
     flexDirection: "row",
@@ -102,11 +91,11 @@ const styles = StyleSheet.create({
   },
   slider: {
     position: "absolute",
-    width: "48%",
-    height: "42",
+    width: "51%",
+    height: 42,
     backgroundColor: "white",
     borderRadius: 21,
-    marginTop: "1.3%",
+    top: 4,
   },
   toggleButton: {
     flex: 1,
@@ -117,9 +106,9 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "rgba(255, 255, 255, 0.8)",
+    color: "#E49773",
   },
   selectedText: {
-    color: "#FF6B6B", // Adjust this to match your text color when selected
+    color: "#E49773",
   },
 });
