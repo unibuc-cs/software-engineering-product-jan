@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
-// import Swiper from "react-native-deck-swiper";
+import Swiper from "react-native-deck-swiper";
 import SwipeCard from "./SwipeCard";
+// import { useSuggestionsContext } from "../contexts/suggestions.context";
+// import { use } from "../../../server/routes/user";
 
 const { width, height } = Dimensions.get('window');
 
@@ -81,6 +83,7 @@ const labels = {
 // ];
 
 export default function SuggestionsSwiper({suggestions}) {
+    // const suggestions = useSuggestionsContext();
     const numSuggestions = suggestions.length;
     const [picked, setPicked] = useState(0); // counter - we want it to be reset at midnight...
     // initially we have all the suggestions, but the list gets shorter as we choose tasks

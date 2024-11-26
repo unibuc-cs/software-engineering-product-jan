@@ -20,7 +20,7 @@ app.locals.auth = auth;
 
 db.settings({ ignoreUndefinedProperties: true })
 
-app.use(cors());
+app.use(cors({ origin: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -35,9 +35,9 @@ app.use("/api/user", userRouter);
 app.use("/api/activities", activitiesRouter);
 
 
-app.listen(port, () => {
+app.listen(port,'0.0.0.0' ,() => {
 	console.log(`Server is running on port ${port}`
 	);
 });
 
-exports.api = functions.region("europe-west1").https.onRequest(app);
+// exports.api = functions.region("europe-west1").https.onRequest(app);
