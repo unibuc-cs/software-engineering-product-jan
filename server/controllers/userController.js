@@ -1,5 +1,8 @@
 const {updateUserStats,getUserStats} = require("../services/statsService");
 const {suggestTask} = require("../services/TaskSugestions_old");
+
+
+
 async function createUser(req,res) {
     console.log("create user");
     // create user
@@ -30,6 +33,8 @@ async function createUser(req,res) {
         return res.status(500).json({error: error});
     }
 }
+
+
 async function getUsers(req,res) {
     const db = req.app.locals.db;
     const users = [];

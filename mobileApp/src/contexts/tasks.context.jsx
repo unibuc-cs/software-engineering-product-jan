@@ -164,6 +164,50 @@ export const TasksContextProvider = ({ children }) => {
 
 }
 
+
+  const completeActivity = async (activityId) => {
+    try {
+      const response = await axios.put(
+        `http://192.168.1.11:4000/api/activities/complete/${activityId}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(
+        "Error completing activity:",
+        error.response ? error.response.data : error.message
+      );
+    }
+
+  }
+
+  //stats object : { "creativity": "value1", "inteligence": "value2", ... }
+
+  const increaseStats = async (stats = {}) => {
+    try {
+      const response = await axios.put(
+        `http://192.168.1.11:4000/api/user/stats/${user.uid}`,
+        stats,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Increase stats response:", response.data); 
+    } catch (error) {
+      console.log(
+        "Error increasing stats:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+
+
   const state = {
     activities,
     tasks,
@@ -173,6 +217,8 @@ export const TasksContextProvider = ({ children }) => {
     getAllUserActivities,
     deleteActivity,
     editActivity,
+    completeActivity,
+    increaseStats
   };
 
   return (
