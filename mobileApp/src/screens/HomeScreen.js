@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   calendar: {
-    flex: 1,
+    flex: 1.5,
   },
   tasks: {
     flex: 2,
