@@ -44,11 +44,11 @@ const JourneyScreen = () => {
 
   // prepare the data so that you can send it to Month Path, which in turn sends it to 
   // each pop up
-  useEffect(() => {
-      getAllUserActivities().then((data) => {
-        setAllTasks(data);
-      })
-  }, []);
+//   useEffect(() => {
+//       getAllUserActivities().then((data) => {
+//         setAllTasks(data);
+//       })
+//   }, []);
 
   useEffect(() => {
     const currentMonthIndex = months.findIndex(month => month.month === currentMonth);
@@ -78,7 +78,7 @@ const JourneyScreen = () => {
             </View>
              <MonthPath 
                   {...monthData}
-                  tasks={allTasks} 
+                  tasks={[]} 
                   isVisible={visibleMonths[index]} 
                   highlightDay={monthData.month === currentMonth ? currentDay : null}
                 />

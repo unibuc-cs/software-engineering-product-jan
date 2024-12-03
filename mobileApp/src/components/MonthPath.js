@@ -144,7 +144,7 @@ const MonthPath = ({ tasks, month, year, days, isVisible, highlightDay }) => {
 					}}
 				>
 					<DayModal
-						tasks={tasks}
+						tasks={[]}
 						date={new Date(`${year}-${month}-${pickedDay}`)}
 						modalVisible={modalVisible}
 						setModalVisible={upgradeModalVisible}

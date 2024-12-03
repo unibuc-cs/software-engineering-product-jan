@@ -2,6 +2,67 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView, ActivityIndicator } from 'react-native';
 import Task from './Task';
 
+const task = {
+    id: 1,
+    user_id: "user_id",
+    title: "Test Task",
+    description: "static task to work on rendering front tasks + some more random words for testing",
+    type: "daily",
+    frequency: null,
+    days_of_the_week: null,
+    due_date: "2024-06-10",
+    from_buddy: null,  
+    created_at: "2024-06-10",
+    status: 0,
+    stats: {
+        fitness: 20,
+        skill: 100,
+        wellness: 200,
+        intelligence: 500,
+    },
+    emoji: "😭",
+}
+const habit = {
+    id: 2,
+    user_id: "user_id",
+    title: "Test Habit",
+    description: "static habit to work on rendering front tasks + some more random words for testing",
+    type: "habit",
+    frequency: 1,
+    days_of_the_week: "0011010",
+    due_date: null,
+    from_buddy: null,  
+    created_at: "2024-06-07",
+    status: 0,
+    stats: {
+        fitness: 20,
+        skill: 100,
+        wellness: 200,
+        intelligence: 500,
+    },
+    emoji: "😭",
+}
+const recurring = {
+    id: 3,
+    user_id: "user_id",
+    title: "Test Recurring",
+    description: "static recurring task to work on rendering front tasks + some more random words for testing",
+    type: "recurring",
+    frequency: 1,
+    days_of_the_week: "1011010",
+    due_date: "2024-10-17",
+    from_buddy: null,  
+    created_at: "2024-06-07",
+    status: 0,
+    stats: {
+        fitness: 20,
+        skill: 100,
+        wellness: 200,
+        intelligence: 500,
+    },
+    emoji: "😭",
+}
+
 const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -44,22 +105,22 @@ const checkMatchingDates = (task, date) => {
 const DayModal = ({ tasks, date, modalVisible, setModalVisible }) => {
   const dateString = formatDate(date);
   const [loading, setLoading] = useState(true);
-  const [finished, setFinished] = useState([]);
-  const [unfinished, setUnfinished] = useState([]);
+  const [finished, setFinished] = useState([task, habit]);
+  const [unfinished, setUnfinished] = useState([recurring]);
 
-  useEffect(() => {
-    if (modalVisible) {
-      setLoading(true);
-      const dateTasks = tasks.filter((task) =>
-        task.type === "daily" ? checkEqualDates(new Date(task.created_at), new Date(date)) : checkMatchingDates(task, new Date(date))
-      );
-      const finishedTasks = dateTasks.filter((task) => task.done === true);
-      const unfinishedTasks = dateTasks.filter((task) => task.done === false);
-      setFinished(finishedTasks);
-      setUnfinished(unfinishedTasks);
-      setLoading(false);
-    }
-  }, [modalVisible, tasks, date]);
+//   useEffect(() => {
+//     if (modalVisible) {
+//       setLoading(true);
+//       const dateTasks = tasks.filter((task) =>
+//         task.type === "daily" ? checkEqualDates(new Date(task.created_at), new Date(date)) : checkMatchingDates(task, new Date(date))
+//       );
+//       const finishedTasks = dateTasks.filter((task) => task.done === true);
+//       const unfinishedTasks = dateTasks.filter((task) => task.done === false);
+//       setFinished(finishedTasks);
+//       setUnfinished(unfinishedTasks);
+//       setLoading(false);
+//     }
+//   }, [modalVisible, tasks, date]);
 
   const memoizedTasks = useMemo(() => ({
     finished,
