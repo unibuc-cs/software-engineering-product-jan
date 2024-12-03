@@ -12,6 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { useAuthContext } from "../contexts/auth.context";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Arm from "../svg-components/arm";
+import Intelligence from "../svg-components/Intelligence";
+import Wellness from "../svg-components/Wellness";
+import Skill from "../svg-components/Skill";
 
 export default function NewRecurrentTaskCreation() {
   const [title, setTitle] = useState("");
@@ -141,7 +145,7 @@ export default function NewRecurrentTaskCreation() {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.containerScroll}>
       <SafeAreaView style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>New Recurrent Task</Text>
@@ -150,7 +154,7 @@ export default function NewRecurrentTaskCreation() {
         <View style={styles.taskContainer}>
           <View style={styles.taskTitleWrapper}>
             <TextInput
-              style={styles.sectionContent}
+              style={styles.sectionContentTitleEmoji}
               onChangeText={setTitle}
               value={title}
               placeholder="Task title:"
@@ -210,14 +214,13 @@ export default function NewRecurrentTaskCreation() {
               </View>
             </View>
             <View style={styles.sectionContentWrapper}>
-              <Text style={styles.sectionTitle}>Select the due date</Text>
+              <Text style={styles.sectionTitle}> Due date</Text>
               <TouchableOpacity onPress={() => showMode("date")}>
-                <Text style={styles.sectionContent}>
+                {/* <Text style={styles.sectionContent}>
                   {dueDate.toDateString()} {dueDate.toLocaleTimeString()}
-                </Text>
-              </TouchableOpacity>
-              {show && (
+                </Text> */}
                 <DateTimePicker
+                  style={styles.dateStyle}
                   testID="dateTimePicker"
                   value={dueDate}
                   mode={mode}
@@ -226,7 +229,7 @@ export default function NewRecurrentTaskCreation() {
                   onChange={onChange}
                   onTouchCancel={() => setShow(false)}
                 />
-              )}
+              </TouchableOpacity>
             </View>
 
             <View style={styles.statsContainer}>
@@ -235,6 +238,7 @@ export default function NewRecurrentTaskCreation() {
                 <View>
                   <View style={styles.stat}>
                     <Text style={styles.statName}> Fitness </Text>
+                    <Arm></Arm>
                     <View style={styles.IncContainer}>
                       <TouchableOpacity
                         style={styles.button}
@@ -253,7 +257,8 @@ export default function NewRecurrentTaskCreation() {
                   </View>
 
                   <View style={styles.stat}>
-                    <Text style={styles.IncContainer}> Intelligence </Text>
+                    <Text style={styles.statName}> Intelligence </Text>
+                    <Intelligence></Intelligence>
                     <View style={styles.IncContainer}>
                       <TouchableOpacity
                         style={styles.button}
@@ -275,9 +280,8 @@ export default function NewRecurrentTaskCreation() {
                 <View>
                   <View>
                     <View style={styles.stat}>
-                      <View>
-                        <Text style={styles.statName}> Wellness </Text>
-                      </View>
+                      <Text style={styles.statName}> Wellness </Text>
+                      <Wellness></Wellness>
                       <View style={styles.IncContainer}>
                         <TouchableOpacity
                           style={styles.button}
@@ -299,6 +303,7 @@ export default function NewRecurrentTaskCreation() {
                   <View>
                     <View style={styles.stat}>
                       <Text style={styles.statName}> Skill </Text>
+                      <Skill></Skill>
                       <View style={styles.IncContainer}>
                         <TouchableOpacity
                           style={styles.button}
@@ -336,18 +341,33 @@ export default function NewRecurrentTaskCreation() {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    // padding: 4,
+    backgroundColor: "rgba(228, 151, 115, 0.15)",
+    borderRadius: "30%",
+    width: 22,
+    height: 24,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   submitButton: {
-    padding: 8,
+    padding: 12,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "black",
     borderStyle: "dashed",
   },
   submitButtonWrapper: {
-    marginTop: 40,
+    marginTop: 30,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  submitText: {
+    color: "black",
+    fontSize: 15,
+    fontWeight: "200",
   },
 
   IncContainer: {
@@ -357,18 +377,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 40,
+    paddingBottom: 40,
     backgroundColor: "#FCF4E7",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: 800,
+  },
+  containerScroll: {
+    backgroundColor: "#FCF4E7",
+    flexGrow: 1,
   },
   taskTitleWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    marginTop: 30,
+    marginTop: 15,
   },
   multipleInputWrapper: {
     flex: 1,
@@ -384,7 +408,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   taskDetails: {
-    height: "80%",
+    // height: "80%",
     width: "100%",
     alignSelf: "center",
     paddingHorizontal: "7%",
@@ -410,7 +434,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     marginTop: 10,
-    fontSize: 15,
+    marginBottom: 10,
+    fontSize: 20,
     fontWeight: "200",
   },
   sectionContentWrapper: {
@@ -423,9 +448,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   sectionContentTitleEmoji: {
-    fontSize: 14,
-    paddingHorizontal: 15,
-    marginTop: 15,
+    fontSize: 20,
+    marginTop: 10,
   },
   statsContainer: {
     flex: 1.5,
@@ -443,26 +467,53 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   statName: {
-    flexDirection: "row",
+    fontSize: 18,
+    fontWeight: "200",
+    // flexDirection: "row",
   },
   statValue: {
     fontWeight: "500",
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "600",
   },
   daysWrapper: {
-    flex: 1,
+    display: "flex",
+    justifyContent: "center",
     paddingBottom: 4,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
   day: {
     fontSize: 14,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 20,
+    textAlign: "center",
+    textAlignVertical: "center",
+    height: 20,
   },
   pickedDay: {
     backgroundColor: "#cedefe",
-    borderRadius: 10,
+    borderRadius: 5,
+  },
+  dateStyle: {
+    backgroundColor: "#E49773",
+    borderRadius: "6%",
+    borderWidth: 1,
+    borderColor: "black",
+    borderStyle: "dashed",
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: "200",
+  },
+  counter: {
+    fontSize: 16,
+    fontWeight: "200",
+    padding: 8,
   },
 });

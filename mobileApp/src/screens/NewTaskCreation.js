@@ -13,6 +13,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import { useAuthContext } from "../contexts/auth.context";
+import Arm from "../svg-components/arm";
+import Intelligence from "../svg-components/Intelligence";
+import Wellness from "../svg-components/Wellness";
+import Skill from "../svg-components/Skill";
 
 export default function NewTaskCreation() {
   const { user } = useAuthContext();
@@ -107,7 +111,7 @@ export default function NewTaskCreation() {
         <View style={styles.taskContainer}>
           <View style={styles.taskTitleWrapper}>
             <TextInput
-              style={styles.sectionContent}
+              style={styles.sectionContentTitleEmoji}
               onChangeText={setTitle}
               value={title}
               placeholder="Task title:"
@@ -126,12 +130,11 @@ export default function NewTaskCreation() {
               <Text style={styles.sectionTitle}>Date</Text>
               <View style={styles.sectionContentWrapper}>
                 <TouchableOpacity onPress={() => showMode("date")}>
-                  <Text style={styles.sectionContent}>
+                  {/* <Text style={styles.sectionContent}>
                     {createdAt.toDateString()} {createdAt.toLocaleTimeString()}
-                  </Text>
-                </TouchableOpacity>
-                {show && (
+                  </Text> */}
                   <DateTimePicker
+                    style={styles.dateStyle}
                     testID="dateTimePicker"
                     value={createdAt}
                     mode={mode}
@@ -140,7 +143,7 @@ export default function NewTaskCreation() {
                     onChange={onChange}
                     onTouchCancel={() => setShow(false)}
                   />
-                )}
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -174,6 +177,7 @@ export default function NewTaskCreation() {
                 <View>
                   <View style={styles.stat}>
                     <Text style={styles.statName}> Fitness </Text>
+                    <Arm />
                     <View style={styles.IncContainer}>
                       <TouchableOpacity
                         style={styles.button}
@@ -187,12 +191,14 @@ export default function NewTaskCreation() {
                         onPress={incFitness}
                       >
                         <Text style={styles.buttonText}>+</Text>
+                        {/* <PlusButton></PlusButton> */}
                       </TouchableOpacity>
                     </View>
                   </View>
 
                   <View style={styles.stat}>
                     <Text style={styles.statName}> Intelligence </Text>
+                    <Intelligence></Intelligence>
                     <View style={styles.IncContainer}>
                       <TouchableOpacity
                         style={styles.button}
@@ -215,6 +221,7 @@ export default function NewTaskCreation() {
                   <View>
                     <View style={styles.stat}>
                       <Text style={styles.statName}> Wellness </Text>
+                      <Wellness />
                       <View style={styles.IncContainer}>
                         <TouchableOpacity
                           style={styles.button}
@@ -236,6 +243,7 @@ export default function NewTaskCreation() {
                   <View>
                     <View style={styles.stat}>
                       <Text style={styles.statName}> Skill </Text>
+                      <Skill />
                       <View style={styles.IncContainer}>
                         <TouchableOpacity
                           style={styles.button}
@@ -274,7 +282,14 @@ export default function NewTaskCreation() {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 4,
+    // padding: 4,
+    backgroundColor: "rgba(228, 151, 115, 0.15)",
+    borderRadius: "30%",
+    width: 22,
+    height: 24,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   IncContainer: {
@@ -283,7 +298,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 30,
     paddingBottom: 40,
     backgroundColor: "#FCF4E7",
     display: "flex",
@@ -292,12 +307,18 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+
+  containerScroll: {
+    height: "100%",
+    width: "100%",
+    backgroundColor: "#FCF4E7",
+  },
   taskTitleWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    marginTop: 30,
+    margin: 15,
   },
   shadow: {
     position: "fixed",
@@ -309,14 +330,14 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   submitButton: {
-    padding: 8,
+    padding: 12,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "black",
     borderStyle: "dashed",
   },
   taskDetails: {
-    top: 20,
+    top: 10,
     width: "100%",
     alignSelf: "center",
     paddingHorizontal: "7%",
@@ -341,7 +362,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     marginTop: 10,
-    fontSize: 15,
+    marginBottom: 10,
+    fontSize: 20,
     fontWeight: "200",
   },
   sectionContentWrapper: {
@@ -354,9 +376,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   sectionContentTitleEmoji: {
-    fontSize: 14,
-    paddingHorizontal: 15,
-    marginTop: 15,
+    fontSize: 20,
+    marginTop: 10,
   },
   statsContainer: {
     flex: 1.5,
@@ -371,21 +392,43 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     justifyContent: "space-between",
   },
-  statName: {},
+  statName: {
+    fontSize: 18,
+    fontWeight: "200",
+  },
   statValue: {
     fontWeight: "500",
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "600",
   },
+
   submitText: {
     color: "black",
+    fontSize: 15,
+    fontWeight: "200",
   },
   submitButtonWrapper: {
-    marginTop: 40,
+    marginTop: 30,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  dateStyle: {
+    backgroundColor: "#E49773",
+    borderRadius: "6%",
+    borderWidth: 1,
+    borderColor: "black",
+    borderStyle: "dashed",
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: "200",
+  },
+  counter: {
+    fontSize: 16,
+    fontWeight: "200",
+    padding: 8,
   },
 });
