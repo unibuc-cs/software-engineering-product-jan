@@ -1,10 +1,14 @@
 import { View, Text, ScrollView, SafeAreaView } from "react-native";
 
 import TasksCarousel from "../components/TasksCarousel";
-import SuggestionsCard from "../components/SuggestionsCard";
 import FriendsChallenges from "../components/FriendsChallenges";
+import ButtonCard from "../components/ButtonCard";
 
-export default function QuestsScreen() {   
+const suggestionsTitle = "Suggestions of the day"
+const suggestionsCardText = "Swipe trough all suggestions and find the perfect challenge for you"
+const suggestionsIcon = require('../../assets/swords.png')
+
+export default function QuestsScreen() {
 
     return (
         <SafeAreaView style = {styles.container}>
@@ -14,7 +18,11 @@ export default function QuestsScreen() {
                 </View>
                 <TasksCarousel style = {styles.carouselContainer} />
                 <FriendsChallenges/>
-                <SuggestionsCard />
+                <ButtonCard 
+                    sectionTitle={suggestionsTitle}
+                    navigateTo={"Suggestions"}
+                    cardText={suggestionsCardText}
+                    iconPath={suggestionsIcon}/>
             </ScrollView>
         </SafeAreaView>
     );

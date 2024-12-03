@@ -1,28 +1,28 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
 
-export default function SuggestionsCard() {
+// the styling works as expected only if its perent is a ScrollView
+
+export default function ButtonCard({sectionTitle, navigateTo, cardText, iconPath}) {
   const navigation = useNavigation();
 
   return (
     <View style = {styles.container}>
       <View style = {styles.title}>
-        <Text style = {styles.titleText}> Suggestions of the day </Text>
+        <Text style = {styles.titleText}> {sectionTitle} </Text>
       </View>
       <TouchableOpacity style = {styles.cardContainer}
         activeOpacity = {0.9}
-        onPressOut = {() => navigation.navigate("Suggestions")}
+        onPressOut = {() => navigation.navigate(navigateTo)}
       >
         <>
           <View style = {styles.shadow}></View>
           <View style = {styles.card}>
             <View style = {styles.cardText}>
-              <Text style = {styles.text}> 
-                Swipe trough all suggestions and find the perfect challenge for you 
-              </Text>
+              <Text style = {styles.text}> {cardText} </Text>
             </View>
             <View style = {styles.cardIcon}>
-              <Image source = {require('../../assets/swords.png')} style = {styles.icon}/>
+              <Image source = {iconPath} style = {styles.icon}/>
             </View>
           </View>
         </>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    marginVertical: 20,
+    marginTop: 20,
     justifyContent: "center",
   },
   title: {

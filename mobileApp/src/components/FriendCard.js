@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, Image, Pressable} from "react-native";
-import React, { useEffect, useState } from "react";
+import { React, useState } from "react";
+import FriendRoundCard from "./FriendRoundCard";
 
-// primeste in friend numele... nu cred ca ar fi chiar asa, probabil primesc id-ul
-// si fac call si capat numele si avatarul
 export default function FriendCard({ title, description, stats, friend }) {
   const [extended, setExtended] = useState(false);
   
   return (
-    <View style = {[extended && style.container , !extended && style.containerCircleExterior]}>
+    <View style = {extended && style.container}>
       <Pressable style = {{width: "100%", height: "100%"}} onPress = {() => setExtended(!extended)}>
         {extended &&
           <View style = {style.containerCard}>
@@ -20,7 +19,7 @@ export default function FriendCard({ title, description, stats, friend }) {
                       resizeMode = "contain"
                       source = {require('../../assets/character.png')}
                     />
-                    <Text style = {style.name}> {friend} </Text>
+                    <Text style = {style.name}> {friend.name} </Text>
                   </View>
                   <Text style = {style.title}>{title}</Text>
                 </View>
@@ -36,16 +35,7 @@ export default function FriendCard({ title, description, stats, friend }) {
             </View>
           </View>
         }
-        {!extended &&
-          <View style = {style.containerCircle}>
-            <Image 
-              style = {style.avatar} 
-              resizeMode = "contain"
-              source = {require('../../assets/character.png')}
-            />
-            <Text style = {style.name}> {friend} </Text>
-          </View>
-        }
+        { !extended && <FriendRoundCard friend = {friend} color={"#FFF"}/> }
       </Pressable>
     </View>
   )
@@ -123,22 +113,5 @@ const style = StyleSheet.create({
       width: "25%",
       height: 20,
       marginTop: 20,
-    },
-    //circle styles - the small version =))
-    containerCircleExterior: {
-      width: 80,
-      height: 80,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    containerCircle: {
-      flex: 1,
-      height: "100%",
-      width: "100%",
-      backgroundColor: "white",
-      borderRadius: 100,
-      borderColor: "black",
-      borderWidth: 1,
-      alignItems: "center",
     },
 });

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   NavigationContainer,
   useNavigationState,
@@ -8,7 +8,6 @@ import {
   AuthContextProvider,
   useAuthContext,
 } from "./src/contexts/auth.context";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { SuggestionsProvider } from "./src/contexts/suggestions.context.jsx";
 import Navbar from "./src/components/Navbar";
 import LoadingScreen from "./src/screens/LoadingScreen";
@@ -24,9 +23,9 @@ import NewHabitCreation from "./src/screens/NewHabitCreation.js";
 import SuggestionsScreen from "./src/screens/SuggestionsScreen";
 import TaskScreen from "./src/screens/TaskScreen.js";
 import LoginScreen from "./src/screens/LoginScreen";
-import Task from "./src/components/Task.js";
 import { TasksContextProvider } from "./src/contexts/tasks.context.jsx";
 import OnboardingScreen from "./src/screens/OnboardingScreen.js";
+import BuddiesScreen from "./src/screens/BuddiesScreen.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -100,6 +99,11 @@ function MainNavigator() {
             <Stack.Screen
                 name="Onboarding"
                 component={OnboardingScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Buddies"
+                component={BuddiesScreen}
                 options={{ headerShown: false }}
             />
           </>

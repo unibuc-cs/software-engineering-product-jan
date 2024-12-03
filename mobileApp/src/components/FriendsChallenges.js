@@ -2,21 +2,16 @@ import {View, Text, StyleSheet, FlatList} from "react-native";
 
 import FriendCard from "./FriendCard";
 
-// i'll consider them filtered from now
-// i'm guessing they will be retrieved from a separate table or 
-// we'll have to check just a bool or something (if a task is from a friend or not)
 const friendsChallenges = [
     {
         id: 2,
         title: "do 100 push-ups",
-        iconId: 3, //  is this how we'll hold icon choices?? - should tell iordy for the db
+        iconId: 3, 
         description: "you can bail anytime =P",
         type: "Tasks",
-        // anything else? - type, some sort of date =))\
-        //strenght,intelligence,blabla
         stats: [3, 0, 0],
-        friendId: 222,  // "Radu" =)
-        friend: "Radu", // would get it from the db
+        friendId: 222,
+        friend: {name: "Radu"},
       },
       {
         id: 23,
@@ -25,8 +20,8 @@ const friendsChallenges = [
         type: "Tasks",
         description: "buddy reading",
         stats: [0, 3, 0],
-        friendId: 210, // "Ioana" =)
-        friend: "Ioana",
+        friendId: 210,
+        friend: {name: "Ioana"},
       },
       {
         id: 24,
@@ -35,8 +30,8 @@ const friendsChallenges = [
         type: "Tasks",
         description: "buddy reading",
         stats: [0, 3, 0],
-        friendId: 210, // "Ioana" =)
-        friend: "Maria",
+        friendId: 210,
+        friend: {name: "Maria"},
       },
       {
         id: 25,
@@ -45,8 +40,8 @@ const friendsChallenges = [
         type: "Tasks",
         description: "buddy reading",
         stats: [0, 3, 0],
-        friendId: 210, // "Ioana" =)
-        friend: "Iordy",
+        friendId: 210,
+        friend: {name: "Iordy"},
       },
       {
         id: 26,
@@ -55,8 +50,8 @@ const friendsChallenges = [
         type: "Tasks",
         description: "buddy reading",
         stats: [0, 3, 0],
-        friendId: 210, // "Ioana" =)
-        friend: "Elena",
+        friendId: 210,
+        friend: {name: "Elena"},
       },
       {
         id: 27,
@@ -65,8 +60,8 @@ const friendsChallenges = [
         type: "Tasks",
         description: "buddy reading",
         stats: [0, 3, 0],
-        friendId: 210, // "Ioana" =)
-        friend: "Ana",
+        friendId: 210,
+        friend: {name: "Ana"},
       },
 ];
 
@@ -88,7 +83,7 @@ export default function FriendsChallenges() {
     return (
         <View style = {styles.container}>
             <View style = {styles.title}>
-                <Text style = {styles.titleText}> Friends' Challenges </Text>
+                <Text style = {styles.titleText}> Friends Challenges </Text>
             </View>
             <FlatList
                 horizontal
