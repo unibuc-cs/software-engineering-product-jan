@@ -28,7 +28,7 @@ export default function ToggleSwitch() {
   }, [isLoginPage, slideAnim]);
 
   const handleToggle = useCallback(
-    (routeName: string) => {
+    (routeName) => {
       navigation.navigate(routeName);
     },
     [navigation]
