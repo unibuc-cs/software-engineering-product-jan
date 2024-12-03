@@ -1,11 +1,13 @@
 import { useState, useCallback } from "react";
 import {
+    Dimensions,
 	StyleSheet,
 	View,
-	Dimensions
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
+
+const height = Dimensions.get("window").height;
 
 export default function CalendarSlider({day, setDay}) {
 
@@ -35,8 +37,8 @@ export default function CalendarSlider({day, setDay}) {
                     highlightDateContainerStyle = {styles.activeItem}
                     styleWeekend = {false}
                     headerText={null}
-                    calendarHeaderStyle = {{display: "none",}}
-                    style={{flex: 1, width: "100%",}}
+                    calendarHeaderStyle = {{fontSize: 16,}}
+                    style={{flex: 1, width: "100%", height: "95%",}}
                     dayComponentHeight = {70}
                     leftSelector={[]}
                     rightSelector={[]}
@@ -52,13 +54,14 @@ const styles = StyleSheet.create({
 	},
 	picker: {
 		flex: 1,
-		height: "100%",
+        height: 70,
 		padding: 10,
 		flexDirection: "row",
 		alignItems: "center",
 	},
 	item: {
-		width: "90%",
+		width: "87%",
+        height: "100%",
         paddingVertical: 5,
 		alignItems: "center",
         justifyContent: "flex-start",
@@ -71,14 +74,15 @@ const styles = StyleSheet.create({
 	itemWeekday: {
 		fontSize: 13,
 		fontWeight: "500",
-        bottom: 4,
+        bottom: "7%",
 	},
 	itemDate: {
         position: "absolute",
-        top: -5,
-        left: -22,
+        left: "-50%",
+        top: -3,
         width: "100%",
-        padding: "26%",
+        height: height * 0.06,
+        padding: "25%",
 		alignItems: "center",
 		justifyContent: "center",
         fontSize: 15,
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
     activeNumber: {
-        bottom: 5,
+        bottom: "12%",
         padding: 7,
 		alignItems: "center",
 		justifyContent: "center",

@@ -16,6 +16,39 @@ async function getUserActivities(req, res) {
     res.status(200).json(activities);
 }
 
+async function completeActivity(req, res) {
+
+
+    const db = req.app.locals.db;
+    const id = req.params.id;
+
+    const activityRef = db.collection("activities").doc(id);
+
+    const activity = await activityRef.get();
+
+    if (!activity.exists) {
+        return res.status(404).json({ error: "Activity not found" });
+    }
+    else{
+        const activityData = activity.data();
+        const date = new Date();
+        const timestamp = date.getTime();
+        activityData.last_completed_at = timestamp;
+        activityData.status = "completed";
+
+        try {
+            await activityRef.update(activityData);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+
+        res.status(200).json({ message: "Activity completed" });
+    }
+
+
+
+}
+
 /*
 
 {
@@ -118,7 +151,7 @@ async function createActivity(req, res) {
             due_date,
             status,
             from_buddy,
-            created_at,
+            created_at: new Date().getTime(),
             last_completed_at,
             completion_history,
             stats
@@ -153,5 +186,6 @@ module.exports = {
     getUserActivities,
     createActivity,
     deleteActivity,
-    editActivity
+    editActivity,
+    completeActivity
 }

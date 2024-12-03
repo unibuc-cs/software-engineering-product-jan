@@ -5,7 +5,6 @@ import {
 	Text,
     TouchableOpacity,
     TextInput,
-    ScrollView
 } from "react-native";
 
 export default function OnboardingForm() {
