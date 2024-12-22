@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, } from "react";
 import {
 	View,
 	StyleSheet,
 	Text,
     TextInput,
+    Image,
+    TouchableOpacity,
 } from "react-native";
 
 export default function SearchBuddies() {
@@ -14,6 +16,10 @@ export default function SearchBuddies() {
 
     const handleCodeChange = (value) => {
         setBuddyCode(value);
+    };
+
+    const handleSubmit = () => {
+        console.log("Submited friend's code: ", buddyCode);
     };
 
     return (
@@ -29,6 +35,13 @@ export default function SearchBuddies() {
                     value={buddyCode}
                     onChangeText={handleCodeChange}
                 />
+                <TouchableOpacity style = {styles.searchIcon} onPress = {handleSubmit}>
+                    <Image 
+                    source={require("../../assets/vector_search_icon.svg.png")}
+                    style={styles.icon}
+                    />
+                </TouchableOpacity>
+                
             </View>
             <View style = {styles.card}>
             {
@@ -50,7 +63,7 @@ export default function SearchBuddies() {
             {
                 searchedYet && anyResults &&
                 <View style = {styles.emptyCard}>
-                    {/* change this to profile after profile component done */}
+                    {/* TODO: change this to profile after profile component done */}
                 </View>
             }
             </View>
@@ -77,6 +90,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 20,
+        flexDirection: "row",
     },
     inputShadow: {
         width: "80%",
@@ -96,6 +110,16 @@ const styles = StyleSheet.create({
 		borderRadius: 25,
 		backgroundColor: "#fff",
         textAlign: "center",
+    },
+    searchIcon: {
+        position: "absolute",
+        right: "15%",
+        width: 20,
+        height: 20,
+    },
+    icon: {
+        width: "100%", 
+        height: "100%",
     },
     card: {
         height: "100%",
