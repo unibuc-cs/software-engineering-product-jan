@@ -10,49 +10,62 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FigmaEmbed from "../components/WavyBackground";
+import TaskPage from "../svg-components/TaskPage";
 
 export default function TaskCreationScreen1() {
   const navigation = useNavigation();
+
+  const handleNavigation = (screenName) => {
+    navigation.navigate(screenName);
+  };
+
   return (
     <SafeAreaView style={styles.backgr}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.container}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>New Task</Text>
           </View>
           <View style={styles.welcomeMessage}>
-            <Text>Ready to conquer your tasks? Let's get started!🚀</Text>
+            <View>
+              <Text style={styles.welcomeText}>
+                Ready to conquer your tasks? Let's get started!🚀
+              </Text>
+            </View>
+            <View style={styles.svgContainer}>
+              <TaskPage />
+            </View>
           </View>
           <View style={styles.buttonContainer}>
-            <View>
-              <View style={styles.shadow}></View>
-              <TouchableOpacity
-                style={styles.cardContainer}
-                onPress={() => navigation.navigate("NewTaskCreation")}
-              >
+            <TouchableOpacity
+              style={styles.buttonWrapper}
+              onPress={() => handleNavigation("NewTaskCreation")}
+            >
+              <View style={styles.shadow} />
+              <View style={styles.cardContainer}>
                 <Text style={styles.buttonText}>One time task</Text>
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
 
-            <View>
-              <View style={styles.shadow}></View>
-              <TouchableOpacity
-                style={styles.cardContainer}
-                onPress={() => navigation.navigate("NewHabitCreation")}
-              >
+            <TouchableOpacity
+              style={styles.buttonWrapper}
+              onPress={() => handleNavigation("NewHabitCreation")}
+            >
+              <View style={styles.shadow} />
+              <View style={styles.cardContainer}>
                 <Text style={styles.buttonText}>Habit</Text>
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
 
-            <View>
-              <View style={styles.shadow}></View>
-              <TouchableOpacity
-                style={styles.cardContainer}
-                onPress={() => navigation.navigate("NewRecurrentTask")}
-              >
+            <TouchableOpacity
+              style={styles.buttonWrapper}
+              onPress={() => handleNavigation("NewRecurrentTask")}
+            >
+              <View style={styles.shadow} />
+              <View style={styles.cardContainer}>
                 <Text style={styles.buttonText}>Recurrent task</Text>
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -61,64 +74,77 @@ export default function TaskCreationScreen1() {
 }
 
 const styles = StyleSheet.create({
+  backgr: {
+    backgroundColor: "#e49773",
+    flex: 1,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingBottom: 250,
+  },
   container: {
+    display: "flex",
     flex: 1,
     padding: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: "600",
-    alignSelf: "center",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "rgba(0, 0, 0, 0.1)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   titleContainer: {
-    marginVertical: 5,
-    marginHorizontal: 20,
+    marginVertical: 10,
     paddingBottom: 15,
-    borderColor: "black",
-    borderStyle: "dashed",
-    borderBottomWidth: 1,
+    borderColor: "rgba(0,0, 0, 0.5)",
+    borderStyle: "solid",
+    borderBottomWidth: 2,
   },
   welcomeMessage: {
-    marginVertical: 10,
+    // marginVertical: 10,
     paddingHorizontal: 20,
+  },
+  welcomeText: {
     color: "black",
     fontSize: 20,
+    fontWeight: "300",
+    textAlign: "center",
+    marginBottom: 8,
   },
-  buttonContainer: {
-    marginTop: 20,
-    zIndex: 2,
+  svgContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  // buttonContainer: {
+  //   marginTop: 10,
+  // },
+  buttonWrapper: {
+    marginBottom: 20,
+    alignItems: "center",
   },
   cardContainer: {
-    alignSelf: "center",
     height: 45,
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
-    marginVertical: 9,
-    zIndex: 2,
     borderRadius: 20,
-    marginTop: 15,
+    zIndex: 2,
   },
   buttonText: {
     fontSize: 18,
     color: "#000",
   },
-  backgr: {
-    backgroundColor: "#e49773",
-    //height: "100%",
-    flex: 1,
-  },
   shadow: {
     position: "absolute",
-    top: 10,
-    right: 30,
+    top: 5,
     width: "80%",
-    height: 43,
-    alignSelf: "center",
+    height: 45,
     backgroundColor: "#000",
     borderRadius: 20,
     zIndex: 1,
-    marginTop: 15,
   },
 });

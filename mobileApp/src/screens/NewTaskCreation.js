@@ -130,19 +130,22 @@ export default function NewTaskCreation() {
               <Text style={styles.sectionTitle}>Date</Text>
               <View style={styles.sectionContentWrapper}>
                 <TouchableOpacity onPress={() => showMode("date")}>
-                  {/* <Text style={styles.sectionContent}>
-                    {createdAt.toDateString()} {createdAt.toLocaleTimeString()}
-                  </Text> */}
-                  <DateTimePicker
-                    style={styles.dateStyle}
-                    testID="dateTimePicker"
-                    value={createdAt}
-                    mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
-                    onTouchCancel={() => setShow(false)}
-                  />
+                  <Text style={styles.sectionContent}>
+                    {/* {createdAt.toDateString()} {createdAt.toLocaleTimeString()} */}
+                    {createdAt.toDateString()}
+                  </Text>
+                  {show && (
+                    <DateTimePicker
+                      style={styles.dateStyle}
+                      testID="dateTimePicker"
+                      value={createdAt}
+                      mode={mode}
+                      is24Hour={true}
+                      display="default"
+                      onChange={onChange}
+                      onTouchCancel={() => setShow(false)}
+                    />
+                  )}
                 </TouchableOpacity>
               </View>
             </View>
@@ -191,7 +194,6 @@ export default function NewTaskCreation() {
                         onPress={incFitness}
                       >
                         <Text style={styles.buttonText}>+</Text>
-                        {/* <PlusButton></PlusButton> */}
                       </TouchableOpacity>
                     </View>
                   </View>

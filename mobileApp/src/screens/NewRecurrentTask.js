@@ -216,19 +216,21 @@ export default function NewRecurrentTaskCreation() {
             <View style={styles.sectionContentWrapper}>
               <Text style={styles.sectionTitle}> Due date</Text>
               <TouchableOpacity onPress={() => showMode("date")}>
-                {/* <Text style={styles.sectionContent}>
-                  {dueDate.toDateString()} {dueDate.toLocaleTimeString()}
-                </Text> */}
-                <DateTimePicker
-                  style={styles.dateStyle}
-                  testID="dateTimePicker"
-                  value={dueDate}
-                  mode={mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onChange}
-                  onTouchCancel={() => setShow(false)}
-                />
+                <Text style={styles.sectionContent}>
+                  {dueDate.toDateString()}
+                </Text>
+                {show && (
+                  <DateTimePicker
+                    style={styles.dateStyle}
+                    testID="dateTimePicker"
+                    value={dueDate}
+                    mode={mode}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                    onTouchCancel={() => setShow(false)}
+                  />
+                )}
               </TouchableOpacity>
             </View>
 
