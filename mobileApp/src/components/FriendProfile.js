@@ -1,46 +1,135 @@
 import {
-	View,
-	StyleSheet,
-	Text,
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
 } from "react-native";
+import Button1 from "./Button1";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function FriendProfile({friend, anySelected}) {
-
-    return (
-        <View style = {styles.container}>
-            {!anySelected && 
-                <View style = {styles.emptyCard}>
-                    <Text style = {styles.emptyMessage}> Click on a friend {'\n'} to see their profile </Text>
-                </View>
-            }
-            {anySelected &&
-                <View style = {styles.emptyCard}>
-                    <Text style = {styles.emptyMessage}> {friend.name}'s Profile {'\n '} </Text>
-                </View>
-            }
+export default function FriendProfile({ friend, anySelected }) {
+  console.log(friend);
+  return (
+    <View style={styles.container}>
+      {!anySelected && (
+        <View style={styles.emptyCard1}>
+          <Text style={styles.emptyMessage}>
+            {" "}
+            Click on a friend {"\n"} to see their profile{" "}
+          </Text>
         </View>
-    )
+      )}
+      {anySelected && (
+        <View style={styles.emptyCard}>
+          <View style={styles.friendName}>
+            <View style={{ marginTop: 12 }}>
+              <Text style={styles.emptyMessage}>
+                {" "}
+                {friend.name}'s Profile {"\n "}{" "}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.bottomPart}>
+            <View style={styles.profile}>
+              <View style={styles.left}>
+                <Image
+                  style={styles.avatar}
+                  source={require("../../assets/character.png")} // TODO: replace with friend's character
+                />
+              </View>
+              <View style={styles.right}>
+                <View style={styles.stats}>
+                  <Text> Task completed: </Text>
+                  <Text> fitness: {friend.stats["fitness"]} </Text>
+                  <Text> intelligence: {friend.stats["intelligence"]} </Text>
+                  <Text> skill: {friend.stats["wellness"]} </Text>
+                  <Text> wellness: {friend.stats["skill"]} </Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.buttons}>
+              <Button1 color="#9EBEFE" title="Send challenge"></Button1>
+              <Button1 color="#E49773" title="Remove friend"></Button1>
+            </View>
+          </View>
+        </View>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: "100%",
-        height: "70%",
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: 10,
-    },
-    emptyCard: {
-        width: "85%",
-        height: "85%",
-        backgroundColor: "#fff",
-        borderWidth: 1,
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    emptyMessage: {
-        textAlign: "center",
-        fontSize: 18,
-    },
-})
+  container: {
+    width: "100%",
+    height: "70%",
+    alignItems: "center",
+    // justifyContent: "center",
+    marginBottom: 20,
+  },
+  emptyCard: {
+    width: "85%",
+    height: "75%",
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderRadius: 20,
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+  emptyCard1: {
+    width: "85%",
+    height: "75%",
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 28,
+  },
+  emptyMessage: {
+    textAlign: "center",
+    fontSize: 18,
+  },
+  friendName: {
+    backgroundColor: "#E49773",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flex: 0.5,
+    justifyContent: "center",
+  },
+  bottomPart: {
+    flex: 10,
+  },
+  profile: {
+    flex: 3.5,
+    flexDirection: "row",
+  },
+  buttons: {
+    flex: 1.5,
+    justifyContent: "center",
+    flexDirection: "row",
+    paddingBottom: 18,
+  },
+  left: {
+    flex: 1.7,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  right: {
+    flex: 2,
+    // backgroundColor: "black"
+    justifyContent: "center",
+    // alignItems: "center",
+  },
+  avatar: {
+    height: "80%",
+    width: "80%",
+    borderColor: "black",
+    borderWidth: 1.5,
+    padding: 8,
+    borderRadius: 10,
+  },
+  stats: {},
+});
