@@ -40,12 +40,30 @@ export default function FriendProfile({ friend, anySelected }) {
                 />
               </View>
               <View style={styles.right}>
-                <View style={styles.stats}>
+                <View style={styles.title}>
                   <Text> Task completed: </Text>
-                  <Text> fitness: {friend.stats["fitness"]} </Text>
-                  <Text> intelligence: {friend.stats["intelligence"]} </Text>
-                  <Text> skill: {friend.stats["wellness"]} </Text>
-                  <Text> wellness: {friend.stats["skill"]} </Text>
+                </View>
+                <View style={styles.stats}>
+                  <View style={styles.nameofstats}>
+                    <Text style={styles.statsText}> fitness: </Text>
+                    <Text style={styles.statsText}> intelligence: </Text>
+                    <Text style={styles.statsText}> skill: </Text>
+                    <Text style={styles.statsText}> wellness: </Text>
+                  </View>
+                  <View style={styles.valuesofstats}>
+                    <Text style={styles.statsValue}>
+                      {friend.stats["fitness"]}
+                    </Text>
+                    <Text style={styles.statsValue}>
+                      {friend.stats["intelligence"]}
+                    </Text>
+                    <Text style={styles.statsValue}>
+                      {friend.stats["wellness"]}
+                    </Text>
+                    <Text style={styles.statsValue}>
+                      {friend.stats["skill"]}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -119,9 +137,10 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 2,
-    // backgroundColor: "black"
+    // backgroundColor: "black",
     justifyContent: "center",
     // alignItems: "center",
+    marginTop: 8,
   },
   avatar: {
     height: "80%",
@@ -131,5 +150,36 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
   },
-  stats: {},
+  stats: {
+    flex: 1,
+    flexDirection: "row",
+    paddingBottom: 17,
+    justifyContent: "center",
+  },
+  statsText: {
+    textDecorationLine: "underline",
+    fontWeight: "500",
+  },
+  title: {
+    justifyContent: "center",
+    // flex: 2,
+    borderColor: "#9EBEFE",
+    borderWidth: "0.5",
+    borderRadius: "10%",
+    width: "70%",
+    height: "19%",
+  },
+  valuesofstats: {
+    flex: 2,
+    justifyContent: "space-evenly",
+    alignItems: "flex-end",
+    paddingRight: 35,
+  },
+  statsValue: {
+    fontWeight: "700",
+    color: "#E49773",
+  },
+  nameofstats: {
+    justifyContent: "space-evenly",
+  },
 });
