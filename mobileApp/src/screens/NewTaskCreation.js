@@ -87,7 +87,7 @@ export default function NewTaskCreation() {
     };
     try {
       const response = await axios.post(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/add/tasks/${user.uid}`,
+        `http://10.79.225.183:4000/api/activities`,
         newTask
       );
       if (response.status !== 200) {

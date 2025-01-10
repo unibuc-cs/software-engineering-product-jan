@@ -19,7 +19,7 @@ export default function SwipeCard({object}) {
                             </Text>
                         </View>
                         <View style = {styles.descriptionWrapper}>
-                            <Text style = {styles.description}>
+                            <Text style = {styles.descriptiorn}>
                                 {object.description}
                             </Text>
                         </View>

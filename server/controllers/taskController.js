@@ -120,19 +120,20 @@ async function editActivity(req, res) {
 async function createActivity(req, res) {
     const db = req.app.locals.db;
     const {
-        user_id,
-        title,
-        description,
-        type,
-        frequency,
-        days_of_the_week,
-        due_date,
-        status,
-        from_buddy,
-        created_at,
-        last_completed_at,
-        completion_history,
-        stats
+        from_app,
+      from_buddy,
+      type,
+      created_at,
+      done,
+      description,
+      title,
+      user_id,
+      category,
+      fitness,
+      skill,
+      wellness,
+      inteligence,
+      emoji,
     } = req.body;
 
     console.log(req.body);
@@ -142,26 +143,28 @@ async function createActivity(req, res) {
     try {
         // Add the document and get a reference to it
         const docRef = await activitiesRef.add({
-            user_id,
-            title,
-            description,
-            type,
-            frequency,
-            days_of_the_week,
-            due_date,
-            status,
+            from_app,
             from_buddy,
-            created_at: new Date().getTime(),
-            last_completed_at,
-            completion_history,
-            stats
+      type,
+      created_at,
+      done,
+      description,
+      title,
+      user_id,
+      category,
+      fitness,
+      skill,
+      wellness,
+      inteligence,
+      emoji,
+            
         });
         
         const newActivityId = docRef.id;
 
         await docRef.update({ id: newActivityId });
 
-        res.status(201).json({ message: "Activity created", id: newActivityId });
+        res.status(200).json({ message: "Activity created", id: newActivityId });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

@@ -31,7 +31,7 @@ export const SuggestionsProvider = ({ children }) => {
         console.log("Attempting to fetch suggestions...");
 
         // Use a relative URL and set up proxy in package.json for development
-        const response = await axios.get("http://192.168.114.183:4000/api/user/recommend");
+        const response = await axios.get("http://192.168.1.134:4000/api/user/recommend");
 
         console.log("Suggestions fetched:", response.data);
         setSuggestions(response.data);
