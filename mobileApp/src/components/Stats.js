@@ -37,7 +37,7 @@ export default function Stats() {
         <View style = {styles.statsContainer}>
             {stats.map((stat) => {
                 return (
-                    <Stat name = {stat.name} level = {stat.level} procent = {stat.procent}/>
+                    <Stat name = {stat.name} level = {stat.level} procent = {stat.procent} key={stat.id}/>
                 );
             })}
         </View>

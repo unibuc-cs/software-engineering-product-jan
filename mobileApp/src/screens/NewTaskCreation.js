@@ -17,6 +17,7 @@ import Arm from "../svg-components/arm";
 import Intelligence from "../svg-components/Intelligence";
 import Wellness from "../svg-components/Wellness";
 import Skill from "../svg-components/Skill";
+import { useTasksContext } from "../contexts/tasks.context";
 
 export default function NewTaskCreation() {
   const { user } = useAuthContext();
@@ -57,6 +58,9 @@ export default function NewTaskCreation() {
   const [createdAt, setCreatedAt] = useState(new Date());
   const done = 0;
 
+
+  const {createNewActivity} = useTasksContext();
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || createdAt;
     setShow(Platform.OS === "ios");
@@ -85,20 +89,19 @@ export default function NewTaskCreation() {
       inteligence: intelligenceCounter,
       emoji: titleEmoji,
     };
+
+    console.log(newTask);
+
     try {
-      const response = await axios.post(
-        `http://10.79.225.183:4000/api/activities`,
-        newTask
-      );
-      if (response.status !== 200) {
-        alert("Error creating task");
-        throw new Error("Error creating task");
-      }
-      alert("Task created successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Error creating task");
+      const response = await createNewActivity(newTask);
+      console.log(response);
     }
+    catch (error) {
+      console.log(error);
+    }
+
+    
+   
   };
 
   return (

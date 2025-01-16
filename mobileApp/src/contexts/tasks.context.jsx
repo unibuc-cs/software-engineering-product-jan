@@ -24,17 +24,17 @@ export const TasksContextProvider = ({ children }) => {
   const [recurrentTasks, setRecurrentTasks] = useState([]);
 
   const getAllUserActivities = async () => {
-    console.log("User", user);
+  //  console.log("User", user);
     try {
       const response = await axios.get(
-        `http://192.168.42.156:4000/api/activities/${user.uid}`,
+        `http://192.168.1.6:4000/api/activities/${user.uid}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      console.log("Activities response:", response.data); // Log the response
+    //  console.log("Activities response:", response.data); // Log the response
       setActivities(response.data);
       filterByType();
       return response.data;
@@ -99,7 +99,7 @@ export const TasksContextProvider = ({ children }) => {
   const createNewActivity = async (activity) => {
     try {
       const response = await axios.post(
-        `http://192.168.42.156:4000/api/activities`,
+        `http://192.168.1.6:4000/api/activities`,
         activity,
         {
           headers: {
@@ -121,7 +121,7 @@ export const TasksContextProvider = ({ children }) => {
   const deleteActivity = async (activityId) => {
     try {
       const response = await axios.delete(
-        `http://192.168.42.156:4000/api/activities/${activityId}`,
+        `http://192.168.1.6:4000/api/activities/${activityId}`,
         {
           headers: {
             "Content-Type": "application/json",

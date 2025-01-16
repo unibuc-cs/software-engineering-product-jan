@@ -3,14 +3,16 @@ import {
     StyleSheet,
     Text,
     SafeAreaView,
+    TouchableOpacity,
   } from "react-native";
 import TaskCard from "../components/TaskCard";
 import TrashBin from "../svg-components/TrashBin";
-
+import { useTasksContext } from "../contexts/tasks.context";
+import { useNavigation } from "@react-navigation/native";
 export default function TaskScreen({route}) {
 
     const {task} = route.params;
-
+    const navigation = useNavigation();
     const recurring = task.type === "recurring" ? 1 : 0;
     const taskType = recurring ? "Recurring Task" : task.type === "daily" ? "Task" : "Habit"; 
 
@@ -20,6 +22,8 @@ export default function TaskScreen({route}) {
         const day = String(date.getDate()).padStart(2, "0");
         return `${day}/${month}/${year}`;
     };
+
+    const {deleteActivity} = useTasksContext();
 
     return (
         <SafeAreaView style = {styles.container}>
@@ -39,7 +43,14 @@ export default function TaskScreen({route}) {
                 <Text style = {styles.title}> 
                     <Text style = {styles.sectionContent}> {taskType} </Text>
                 </Text>
+                <TouchableOpacity onPress={
+                    () => {deleteActivity(task.id)
+                    navigation.goBack();
+                    }
+
+                } style = {styles.deleteButton}>
                 <TrashBin width = "30" height = "30"/>
+                </TouchableOpacity>
             </View>
             <View style = {styles.taskContainer}>
                 <View style = {styles.taskHeader}>

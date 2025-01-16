@@ -18,7 +18,6 @@ import { useTasksContext } from "../contexts/tasks.context";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  const { logout } = useAuthContext();
   const routes = useNavigationState((state) => state?.routes || []);
   const currentRoute = routes[routes.length - 1]?.name;
 
@@ -34,6 +33,7 @@ export default function HomeScreen() {
     });
   }, [currentRoute]);
 
+
   const [day, setDay] = useState(new Date()); // selected day of the calendar slider
 
   useEffect(() => {
@@ -45,6 +45,9 @@ export default function HomeScreen() {
   const updateDay = (newDay) => {
     setDay(newDay);
   };
+
+
+console.log(allTasks);
 
   // function that checks if a day is today
   // to change the title of the tasks list
@@ -65,19 +68,6 @@ export default function HomeScreen() {
     return `${day}/${month}/${year}`;
   };
 
-  const handleLogout = async () => {
-    try {
-      const logoutResponse = await logout();
-
-      if (!(logoutResponse instanceof Error)) {
-        navigation.navigate("Login");
-      } else {
-        setErrorMessage("Logout failed");
-      }
-    } catch (error) {
-      setErrorMessage("An error occurred. Please try again.");
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -118,7 +108,7 @@ export default function HomeScreen() {
           {allTasks === undefined ? (
             <Text style={{ textAlign: "center" }}> Tasks are loading... </Text>
           ) : (
-            <TaskList tasks={allTasks} scheduled={true} date={day} />
+            <TaskList tasks={allTasks} />
           )}
         </View>
       </View>

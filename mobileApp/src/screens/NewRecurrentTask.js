@@ -16,6 +16,7 @@ import Arm from "../svg-components/arm";
 import Intelligence from "../svg-components/Intelligence";
 import Wellness from "../svg-components/Wellness";
 import Skill from "../svg-components/Skill";
+import {useTasksContext} from "../contexts/tasks.context";
 
 export default function NewRecurrentTaskCreation() {
   const [title, setTitle] = useState("");
@@ -27,6 +28,8 @@ export default function NewRecurrentTaskCreation() {
 
   const { user } = useAuthContext();
 
+  const {createNewActivity} = useTasksContext();
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || dueDate;
     setShow(Platform.OS === "ios");
@@ -34,14 +37,12 @@ export default function NewRecurrentTaskCreation() {
   };
   const [category, setCategory] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [wellness, setWellness] = React.useState("");
-  const [intelligence, setIntelligence] = React.useState("");
-  const [skill, setSkill] = React.useState("");
-  const [fitness, setFitness] = React.useState("");
-  const [type, setType] = React.useState("reccuring");
   const createdAt = new Date().toISOString();
   const done = 0;
-  const [daysPerWeek, setDaysPerWeek] = React.useState("0000000");
+  const [wellnessCounter, setWellnessCounter] = useState(1);
+  const [intelligenceCounter, setIntelligenceCounter] = useState(1);
+  const [skillCounter, setSkillCounter] = useState(1);
+  const [fitnessCounter, setFitnessCounter] = useState(1);
 
   const showMode = (currentMode) => {
     setShow(true);
@@ -58,10 +59,7 @@ export default function NewRecurrentTaskCreation() {
     false,
   ]);
 
-  const [wellnessCounter, setWellnessCounter] = useState(1);
-  const [intelligenceCounter, setIntelligenceCounter] = useState(1);
-  const [skillCounter, setSkillCounter] = useState(1);
-  const [fitnessCounter, setFitnessCounter] = useState(1);
+
 
   const incWellness = () => setWellnessCounter(wellnessCounter + 1);
   const decWellness = () => {
@@ -91,37 +89,39 @@ export default function NewRecurrentTaskCreation() {
 
   const handleSubmit = async () => {
     const objectToSend = {
-      from_app: 0,
-      from_buddy: null,
-      type: type,
-      created_at: new Date(),
-      done: 0,
+      title:title,
+      titleEmoji: titleEmoji,
+      type: "recurring",
+      created_at: createdAt,
+      done:done,
       description: description,
-      title: title,
       user_id: user.uid,
-      due_date: dueDate,
       category: category,
-      days_per_week: encodeDays(days),
-      week_interval: weekInterval,
       fitness: fitnessCounter,
       skill: skillCounter,
       wellness: wellnessCounter,
       inteligence: intelligenceCounter,
       emoji: titleEmoji,
+      frequency: weekInterval,
+      days_of_the_week: encodeDays(days),
+      due_date: dueDate 
     };
 
+
+    console.log(objectToSend);
+
     try {
-      console.log(objectToSend);
-      const response = await axios.post(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/add/reccuring/${user.uid}`,
-        objectToSend
-      );
-      console.log(response.data);
-      alert("Task created successfully");
-    } catch (error) {
-      console.error(error);
-      alert("Error creating task");
+      const response = await createNewActivity(objectToSend);
+      console.log("Create activity response:", response);
     }
+    catch (error) {
+      console.log(
+        "Error creating activity:",
+        error.response ? error.response.data : error.message
+      );
+    }
+
+   
   };
 
   const selectWeekday = (index) => {

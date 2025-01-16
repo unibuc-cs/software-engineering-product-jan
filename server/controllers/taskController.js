@@ -120,7 +120,7 @@ async function editActivity(req, res) {
 async function createActivity(req, res) {
     const db = req.app.locals.db;
     const {
-        from_app,
+      from_app,
       from_buddy,
       type,
       created_at,
@@ -134,6 +134,9 @@ async function createActivity(req, res) {
       wellness,
       inteligence,
       emoji,
+      days_of_the_week,
+      due_date,
+      week_interval
     } = req.body;
 
     console.log(req.body);
@@ -157,7 +160,9 @@ async function createActivity(req, res) {
       wellness,
       inteligence,
       emoji,
-            
+      days_of_the_week,
+      due_date,
+      week_interval
         });
         
         const newActivityId = docRef.id;

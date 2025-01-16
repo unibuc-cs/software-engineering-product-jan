@@ -10,13 +10,12 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import axios from "axios";
 import { useAuthContext } from "../contexts/auth.context";
 import Arm from "../svg-components/arm";
 import Intelligence from "../svg-components/Intelligence";
 import Wellness from "../svg-components/Wellness";
 import Skill from "../svg-components/Skill";
-
+import { useTasksContext } from "../contexts/tasks.context";
 export default function NewHabitCreation() {
   const [title, setTitle] = React.useState("");
   const [titleEmoji, setTitleEmoji] = React.useState("");
@@ -37,6 +36,8 @@ export default function NewHabitCreation() {
   const [intelligenceCounter, setIntelligenceCounter] = useState(1);
   const [skillCounter, setSkillCounter] = useState(1);
   const [fitnessCounter, setFitnessCounter] = useState(1);
+
+  const {createNewActivity} = useTasksContext();
 
   const incWellness = () => setWellnessCounter(wellnessCounter + 1);
   const decWellness = () => {
@@ -62,45 +63,54 @@ export default function NewHabitCreation() {
 
   const [category, setCategory] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [type, setType] = React.useState("habit");
   const [weekInterval, setWeekInterval] = React.useState(1);
-  const [frequency, setFrequency] = React.useState(1);
 
   const encodeDays = (days) => {
     return days.map((day) => (day ? "1" : "0")).join("");
   };
 
   const handleSubmit = async () => {
-    const objectToSend = {
-      from_app: 0,
-      from_buddy: null,
-      type: type,
+   
+
+    const daysString = encodeDays(days);
+    const data = {
+      from_app: false,
+      from_buddy: false,
+      type: "habit",
       created_at: new Date(),
-      done: 0,
+      done: false,
       description: description,
       title: title,
       user_id: user.uid,
       category: category,
-      days_per_week: encodeDays(days),
-      week_interval: weekInterval,
       fitness: fitnessCounter,
       skill: skillCounter,
       wellness: wellnessCounter,
       inteligence: intelligenceCounter,
       emoji: titleEmoji,
+      days_of_the_week: daysString,
+      week_interval: weekInterval,
     };
 
-    try {
-      const response = await axios.post(
-        `https://europe-west1-gamifylife-810f8.cloudfunctions.net/api/user/add/habits/${user.uid}`,
-        objectToSend
-      );
-      console.log(response.data);
-      alert("Habit created successfully!");
-    } catch (error) {
-      console.error(error);
-      alert("Error creating habit");
+    console.log(data);
+
+    try{
+      const response = await createNewActivity(data);
+      console.log(response);
     }
+
+      
+      catch (error) {
+        console.log(
+          "Error creating activity:",
+          error.response ? error.response.data : error.message
+        );
+      }
+
+    
+
+
+   
   };
 
   const selectWeekday = (index) => {

@@ -47,9 +47,16 @@ export default function TaskCard({task}) {
                     {/* Frequency Section */}
                     <View style = {[styles.sectionWrapper, {flex: 1.25}]}>
                         <Text style = {styles.sectionTitle}> Frequency </Text>
-                        <Text style = {styles.sectionContent}>
-                            Every {task.frequency} week(s)
-                        </Text>
+                       { (task.type === "habit") ? (
+                            <Text style = {styles.sectionContent}>
+                               Every {task.week_interval} week(s)
+                            </Text>
+                        ) : (
+                            <Text style = {styles.sectionContent}>
+                                Recurring
+                            </Text>
+                        )
+                        }
                     </View>
                     {/* Days of the Week Section */}
                     <View style = {[styles.sectionWrapper, {flex: 1}]}>
@@ -73,21 +80,21 @@ export default function TaskCard({task}) {
                 <View>
                 <View style={styles.stat}>
                     <Text style={styles.statName}> Fitness </Text>
-                    <Text style={styles.statValue}> + {task.stats.fitness} </Text>
+                    <Text style={styles.statValue}> + {task.fitness} </Text>
                 </View>
                 <View style={styles.stat}>
                     <Text style={styles.statName}> Intelligence </Text>
-                    <Text style={styles.statValue}> + {task.stats.intelligence} </Text>
+                    <Text style={styles.statValue}> + {task.inteligence} </Text>
                 </View>
                 </View>
                 <View>
                 <View style={styles.stat}>
                     <Text style={styles.statName}> Wellness </Text>
-                    <Text style={styles.statValue}> + {task.stats.wellness} </Text>
+                    <Text style={styles.statValue}> + {task.wellness} </Text>
                 </View>
                 <View style={styles.stat}>
                     <Text style={styles.statName}> Skill </Text>
-                    <Text style={styles.statValue}> + {task.stats.skill} </Text>
+                    <Text style={styles.statValue}> + {task.skill} </Text>
                 </View>
                 </View>
             </View>
