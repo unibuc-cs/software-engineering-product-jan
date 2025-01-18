@@ -27,7 +27,7 @@ export const TasksContextProvider = ({ children }) => {
   //  console.log("User", user);
     try {
       const response = await axios.get(
-        `http://192.168.1.6:4000/api/activities/${user.uid}`,
+        `http://192.168.50.156:4000/api/activities/${user.uid}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export const TasksContextProvider = ({ children }) => {
   const createNewActivity = async (activity) => {
     try {
       const response = await axios.post(
-        `http://192.168.1.6:4000/api/activities`,
+        `http://192.168.50.156:4000/api/activities`,
         activity,
         {
           headers: {
@@ -165,25 +165,31 @@ export const TasksContextProvider = ({ children }) => {
 }
 
 
-  const completeActivity = async (activityId) => {
-    try {
-      const response = await axios.put(
-        `http://192.168.1.11:4000/api/activities/complete/${activityId}`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } catch (error) {
-      console.log(
-        "Error completing activity:",
-        error.response ? error.response.data : error.message
-      );
-    }
-
+const completeActivity = async (activityId, isDone) => {
+  try {
+    const response = await axios.put(
+      `http://192.168.50.156:4000/api/activities/complete/${activityId}`,
+      { parameter: isDone ? "done" : "undone" },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    // Update local state after completion
+    setActivities((prev) =>
+      prev.map((activity) =>
+        activity.id === activityId ? { ...activity, done: isDone } : activity
+      )
+    );
+  } catch (error) {
+    console.log(
+      "Error completing activity:",
+      error.response ? error.response.data : error.message
+    );
   }
+};
+
 
   //stats object : { "creativity": "value1", "inteligence": "value2", ... }
 

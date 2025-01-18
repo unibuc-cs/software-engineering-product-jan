@@ -33,9 +33,9 @@ export default function TasksScreen() {
         </View>
         <View>
           <Text style={styles.subtitle}>Ongoing</Text>
-          
+
           <TaskList scheduled={true} tasks={allTasks}></TaskList>
-          
+
         </View>
       </ScrollView>
     </SafeAreaView>

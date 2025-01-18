@@ -10,7 +10,10 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import DayModal from "./DayModal.js";
-
+import { useTasksContext } from "../contexts/tasks.context.jsx";
+import { useEffect } from "react";
+import { useNavigationState } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
 const amplitude = 80;
 const frequency = 0.22;
@@ -55,6 +58,8 @@ const MonthPath = ({ tasks, month, year, days, isVisible, highlightDay }) => {
 		return [x, y];
 	});
 
+	const [allTasks, setAllTasks] = useState([]);
+
 	const path = generatePath(positions);
 	const backgroundImage = getSeasonBackground(month);
 
@@ -64,6 +69,19 @@ const MonthPath = ({ tasks, month, year, days, isVisible, highlightDay }) => {
 	const upgradeModalVisible = (newState) => {
 		setModalVisible(newState);
 	};
+
+	const {getAllUserActivities} = useTasksContext();
+
+	  const navigation = useNavigation();
+	  const routes = useNavigationState((state) => state?.routes || []);
+	  const currentRoute = routes[routes.length - 1]?.name;
+
+	useEffect(() => {
+		getAllUserActivities().then((data) => {
+			setAllTasks(data);
+		});
+	} ,[currentRoute]);
+	
 
 	return (
 		<View style={styles.container}>
@@ -144,7 +162,7 @@ const MonthPath = ({ tasks, month, year, days, isVisible, highlightDay }) => {
 					}}
 				>
 					<DayModal
-						tasks={[]}
+						tasks={allTasks}
 						date={new Date(`${year}-${month}-${pickedDay}`)}
 						modalVisible={modalVisible}
 						setModalVisible={upgradeModalVisible}

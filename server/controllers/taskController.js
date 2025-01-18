@@ -22,6 +22,8 @@ async function completeActivity(req, res) {
     const db = req.app.locals.db;
     const id = req.params.id;
 
+    const {parameter} = req.body;
+
     const activityRef = db.collection("activities").doc(id);
 
     const activity = await activityRef.get();
@@ -34,7 +36,13 @@ async function completeActivity(req, res) {
         const date = new Date();
         const timestamp = date.getTime();
         activityData.last_completed_at = timestamp;
-        activityData.status = "completed";
+        
+        if (parameter == "done") {
+            activityData.done = true;
+        }
+        else{
+            activityData.done = false;
+        }
 
         try {
             await activityRef.update(activityData);

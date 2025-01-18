@@ -1,32 +1,47 @@
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import Checkbox from "expo-checkbox";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useTasksContext } from "../contexts/tasks.context";
 
 export default function Task({ id, item, title, emoji, state, showCheckbox }) {
   const navigation = useNavigation();
   const [isSelected, setSelection] = useState(false);
 
+  const { completeActivity } = useTasksContext();
+
+  // Sync checkbox selection with task state
+  useEffect(() => {
+    setSelection(state === "done");
+  }, [state]);
+
   return (
-    <TouchableWithoutFeedback onPress = {() => navigation.navigate("Task", {task: item})}>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate("Task", { task: item })}
+    >
       <View style={styles.container}>
         <View style={styles.titleWrapper}>
           <Text style={styles.emojiWrapper}>{emoji}</Text>
           <Text>{title}</Text>
         </View>
-        {
-          showCheckbox &&
+        {showCheckbox && (
           <View>
             <View style={styles.checkboxContainer}>
               <Checkbox
                 color={"black"}
                 value={isSelected}
-                onValueChange={setSelection}
+                onValueChange={() => {
+                  const newSelection = !isSelected;
+                  console.log("Checkbox toggled:", newSelection);
+                  setSelection(newSelection);
+                  completeActivity(id, newSelection);
+                }}
+                
                 style={styles.checkbox}
               />
             </View>
           </View>
-        }
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -45,12 +60,6 @@ const styles = StyleSheet.create({
   emojiWrapper: {
     marginRight: 10,
   },
-
-  // container: {
-  //   flex: 1,
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
   checkboxContainer: {
     flexDirection: "row",
     marginBottom: 10,
@@ -63,12 +72,4 @@ const styles = StyleSheet.create({
   label: {
     margin: 8,
   },
-  // shadow: {
-  //   top: 1,
-  //   left: 4,
-  //   width: "10%",
-  //   height: "100%",
-  //   backgroundColor: "black",
-  //   borderRadius: 8,
-  // },
 });
