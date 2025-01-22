@@ -21,6 +21,11 @@ export default function HomeScreen() {
   const routes = useNavigationState((state) => state?.routes || []);
   const currentRoute = routes[routes.length - 1]?.name;
 
+  // set these next two from the user's data:
+  const hasCharacter = false;
+  const isBoy = true;
+  const characterPath = isBoy ? "../../assets/boy.png" : "../../assets/girl.png";
+
   const [allTasks, setAllTasks] = useState([]);
 
   const { getAllUserActivities } = useTasksContext();
@@ -75,10 +80,18 @@ console.log(allTasks);
         <View style={styles.leftQuarter}>
             <LogOut />  
           	<View style={styles.characterContainer}>
-            	<Image
-              	source={require("../../assets/boy.png")}
-              	style={styles.character}
-                />
+                {
+                    !hasCharacter && 
+                    <TouchableOpacity 
+                        style={styles.addCharacterButton} 
+                        onPress={() => navigation.navigate("AddCharacter")}>
+                            <Text style={styles.buttonText}> Add Character {'\n'} + </Text>
+                    </TouchableOpacity>
+                }
+                {
+                    hasCharacter && 
+                    <Image source={require(characterPath)} style={styles.character}/>
+                }
             </View>
         </View>
         <View style={styles.rightQuarter}>
@@ -140,15 +153,16 @@ const styles = StyleSheet.create({
   },
   characterContainer: {
     flex: 1,
+    width: "100%",
+    marginLeft: "20%", 
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1,
   },
   character: {
     marginTop: "30%",
-    marginLeft: "10%",
     height: 300,
-    width: 200,
+    width: 100,
   },
   rightQuarter: {
     flex: 1,
@@ -176,10 +190,19 @@ const styles = StyleSheet.create({
   tasks: {
     flex: 2,
   },
-    onboardingButton: {
-        marginBottom: 10,
-        backgroundColor: "#f1948a",
-        padding: 10,
-        borderRadius: 10,
-    },
+  onboardingButton: {
+    marginBottom: 10,
+    backgroundColor: "#f1948a",
+    padding: 10,
+    borderRadius: 10,
+  },
+  addCharacterButton: {
+    padding: 10,
+    backgroundColor: "#f1948a",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+  },
 });

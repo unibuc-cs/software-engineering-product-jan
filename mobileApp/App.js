@@ -27,6 +27,7 @@ import { TasksContextProvider } from "./src/contexts/tasks.context.jsx";
 import OnboardingScreen from "./src/screens/OnboardingScreen.js";
 import BuddiesScreen from "./src/screens/BuddiesScreen.js";
 import AddBuddiesScreen from "./src/screens/AddBuddiesScreen.js";
+import AddCharacterScreen from "./src/screens/AddCharacterScreen.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -110,6 +111,11 @@ function MainNavigator() {
             <Stack.Screen
                 name="AddBuddies"
                 component={AddBuddiesScreen}
+                options={{ headerShown: false }} 
+            />
+             <Stack.Screen
+                name="AddCharacter"
+                component={AddCharacterScreen}
                 options={{ headerShown: false }} 
             />
           </>
