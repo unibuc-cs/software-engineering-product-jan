@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
       },
       avatar: {
         flex: 3,
+        width: "100%",
+        height: "100%",
       },
       name: {
         flex: 1,

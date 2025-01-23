@@ -1,13 +1,12 @@
-import { StyleSheet, Text, View, Image, Pressable} from "react-native";
+import { StyleSheet, Text, View, Image, Pressable, } from "react-native";
 import { React, useState } from "react";
 import FriendRoundCard from "./FriendRoundCard";
 
 export default function FriendCard({ title, description, stats, friend }) {
-  const [extended, setExtended] = useState(false);
-  
-  return (
-    <View style = {extended && style.container}>
-      <Pressable style = {{width: "100%", height: "100%"}} onPress = {() => setExtended(!extended)}>
+    const [extended, setExtended] = useState(false);
+
+    return (
+      <Pressable onPress = {() => setExtended(!extended)}>
         {extended &&
           <View style = {style.containerCard}>
             <View style = {style.shadow}/>
@@ -37,20 +36,15 @@ export default function FriendCard({ title, description, stats, friend }) {
         }
         { !extended && <FriendRoundCard friend = {friend} color={"#FFF"}/> }
       </Pressable>
-    </View>
-  )
+    )
 }
 
 const style = StyleSheet.create({
-    container: {
+    containerCard: {
       height: 240,
       width: 300,
       marginBottom: 5,
       justifyContent: "center",
-    },
-    containerCard: {
-      width: "100%",
-      height: "100%",
     },
     shadow: {
       flex: 1,
@@ -91,6 +85,8 @@ const style = StyleSheet.create({
     },
     avatar: {
       flex: 3,
+      width: "100%",
+      height: "100%",
     },
     name: {
       flex: 1,
