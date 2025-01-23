@@ -29,10 +29,11 @@ app.use(express.json());
 //Routes
 const userRouter = require("./routes/user.js");
 const activitiesRouter = require("./routes/activities.js");
-
+const recommenderRouter = require("./routes/recommender.js");
 
 app.use("/api/user", userRouter);
 app.use("/api/activities", activitiesRouter);
+app.use("/api/recommender", recommenderRouter);
 
 
 app.listen(port,'0.0.0.0' ,() => {
