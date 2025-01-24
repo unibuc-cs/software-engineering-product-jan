@@ -3,6 +3,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "./auth.context";
 
+import {API_URL_DEV, API_URL_PROD} from "@env";
+
+
+
 export const TasksContext = createContext({});
 
 export const useTasksContext = () => {
@@ -25,8 +29,9 @@ export const TasksContextProvider = ({ children }) => {
   const getAllUserActivities = async () => {
     //  console.log("User", user);
     try {
+      console.log(API_URL_DEV);
       const response = await axios.get(
-        `http://192.168.50.156:4000/api/activities/${user.uid}`,
+        `${API_URL_DEV}/api/activities/${user.uid}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -93,7 +98,7 @@ export const TasksContextProvider = ({ children }) => {
   const createNewActivity = async (activity) => {
     try {
       const response = await axios.post(
-        `http://192.168.50.156:4000/api/activities`,
+        `${API_URL_DEV}/api/activities`,
         activity,
         {
           headers: {
@@ -114,7 +119,7 @@ export const TasksContextProvider = ({ children }) => {
   const deleteActivity = async (activityId) => {
     try {
       const response = await axios.delete(
-        `http://192.168.1.6:4000/api/activities/${activityId}`,
+        `${API_URL_DEV}/api/activities/${activityId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -135,7 +140,7 @@ export const TasksContextProvider = ({ children }) => {
   const editActivity = async (activityId, changes = {}) => {
     try {
       const response = await axios.put(
-        `http://192.168.10.3:4000/api/activities/${activityId}`,
+        `${API_URL_DEV}/api/activities/${activityId}`,
         changes,
         {
           headers: {
@@ -156,7 +161,7 @@ export const TasksContextProvider = ({ children }) => {
   const completeActivity = async (activityId, isDone) => {
     try {
       const response = await axios.put(
-        `http://192.168.50.156:4000/api/activities/complete/${activityId}`,
+        `${API_URL_DEV}/api/activities/complete/${activityId}`,
         { parameter: isDone ? "done" : "undone" },
         {
           headers: {
@@ -183,7 +188,7 @@ export const TasksContextProvider = ({ children }) => {
   const increaseStats = async (stats = {}) => {
     try {
       const response = await axios.put(
-        `http://192.168.1.11:4000/api/user/stats/${user.uid}`,
+        `${API_URL_DEV}/api/user/stats/${user.uid}`,
         stats,
         {
           headers: {

@@ -83,6 +83,7 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+ 
         AsyncStorage.setItem("isLoggedIn", "true");
       } else {
         setUser(null);
