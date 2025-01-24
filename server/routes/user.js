@@ -7,7 +7,7 @@ const { createUser,getUsers, getUser,updateStats,suggestUserTask} = require("../
 
 router.post("/", createUser);
 
-router.get("/recommend", suggestUserTask);
+// router.get("/recommend", suggestUserTask);
 
 // Place dynamic routes like `/:id` before generic ones like `/`
 router.get("/:id", getUser);
