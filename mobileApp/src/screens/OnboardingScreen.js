@@ -6,12 +6,17 @@ import Interests from "../components/Interests";
 import GetStarted from "../components/GetStarted";
 import { Dimensions, ScrollView } from 'react-native';
 
-const height = Dimensions.get("window").height;
+const height = Dimensions.get("screen").height;
 
 export default function OnboardingScreen() {
     return (
-        <ScrollView>
-            <Swiper loop={false} activeDotColor='#E49773' style={{height: height * 1.05}}>
+        <ScrollView scrollEnabled={false}>
+            <Swiper 
+                loop={false} 
+                activeDotColor='#E49773' 
+                style={{height: height}} 
+                paginationStyle={{bottom: height * 0.075}}
+            >
                 <Greeting />
                 <OnboardingForm />
                 <Interests />
