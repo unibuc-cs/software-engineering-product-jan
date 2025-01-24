@@ -7,7 +7,9 @@ import {
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
 
-const height = Dimensions.get("window").height;
+const height = Dimensions.get("screen").height;
+const dayComponentHeight = height * 0.07;
+const numberComponentHeight = height * 0.0525;
 
 export default function CalendarSlider({day, setDay}) {
 
@@ -20,30 +22,28 @@ export default function CalendarSlider({day, setDay}) {
 	
 	return (
 		<View style={styles.container}>
-			<View style={styles.picker}>
-				<CalendarStrip 
-                    scrollable
-                    scrollerPaging
-                    selectedDate = {selected}
-                    onDateSelected = {handleDayChange}
-                    minDate = {moment().subtract(6, "months")}
-                    maxDate = {moment().add(6, "months")}
-                    scrollToOnSetSelectedDate = {true}
-                    dateNameStyle = {styles.itemWeekday}
-                    dateNumberStyle = {styles.itemDate}
-                    dayContainerStyle = {styles.item}
-                    highlightDateNumberStyle = {styles.activeNumber}
-                    highlightDateNameStyle = {styles.itemWeekday}
-                    highlightDateContainerStyle = {styles.activeItem}
-                    styleWeekend = {false}
-                    headerText={null}
-                    calendarHeaderStyle = {{fontSize: 16,}}
-                    style={{flex: 1, width: "100%", height: "95%",}}
-                    dayComponentHeight = {70}
-                    leftSelector={[]}
-                    rightSelector={[]}
-                />
-			</View>
+            <CalendarStrip 
+                scrollable
+                scrollerPaging
+                selectedDate = {selected}
+                onDateSelected = {handleDayChange}
+                minDate = {moment().subtract(6, "months")}
+                maxDate = {moment().add(6, "months")}
+                scrollToOnSetSelectedDate = {true}
+                dateNameStyle = {styles.itemWeekday}
+                dateNumberStyle = {styles.itemDate}
+                dayContainerStyle = {styles.item}
+                highlightDateNumberStyle = {styles.activeNumber}
+                highlightDateNameStyle = {styles.itemWeekday}
+                highlightDateContainerStyle = {styles.activeItem}
+                styleWeekend = {false}
+                headerText={null}
+                calendarHeaderStyle = {{fontSize: 16,}}
+                style={{flex: 1, width: "100%", height: "95%",}}
+                dayComponentHeight = {dayComponentHeight}
+                leftSelector={[]}
+                rightSelector={[]}
+            />
 		</View>
 	);
 }
@@ -51,17 +51,16 @@ export default function CalendarSlider({day, setDay}) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-	},
-	picker: {
-		flex: 1,
-        height: 70,
+        height: "100%",
+        width: "100%",
 		padding: 10,
 		flexDirection: "row",
 		alignItems: "center",
 	},
 	item: {
+        position: "relative",
 		width: "87%",
-        height: "100%",
+        height: dayComponentHeight,
         paddingVertical: 5,
 		alignItems: "center",
         justifyContent: "flex-start",
@@ -72,20 +71,22 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
 	itemWeekday: {
+        width: "100%",
+        height: dayComponentHeight,
+        bottom: "7%",
 		fontSize: 13,
 		fontWeight: "500",
-        bottom: "7%",
 	},
 	itemDate: {
         position: "absolute",
         left: "-50%",
-        top: -3,
+        top: (-1) * numberComponentHeight,
         width: "100%",
-        height: height * 0.06,
-        padding: "25%",
+        height: height * 0.045,
+        padding: "20%",
 		alignItems: "center",
 		justifyContent: "center",
-        fontSize: 15,
+        fontSize: 14,
 		fontWeight: "600",
 		backgroundColor: "#cedefe",
 		borderColor: "black",
@@ -94,7 +95,8 @@ const styles = StyleSheet.create({
 	},
 	activeItem: {
         width: "90%",
-        paddingTop: 10,
+        height: dayComponentHeight,
+        paddingVertical: 6,
 		alignItems: "center",
         justifyContent: "space-between",
 		backgroundColor: "#E49773",
@@ -105,11 +107,11 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
     activeNumber: {
-        bottom: "12%",
-        padding: 7,
+        bottom: numberComponentHeight,
+        padding: "12%",
 		alignItems: "center",
 		justifyContent: "center",
-        fontSize: 15,
+        fontSize: 14,
 		fontWeight: "600",
 		backgroundColor: "#cedefe",
 		borderWidth: 1,
