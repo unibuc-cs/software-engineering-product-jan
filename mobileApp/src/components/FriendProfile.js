@@ -8,8 +8,10 @@ import {
 } from "react-native";
 import Button1 from "./Button1";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 export default function FriendProfile({ friend, anySelected }) {
+    const navigation = useNavigation();
   console.log(friend);
   return (
     <View style={styles.container}>
@@ -68,7 +70,7 @@ export default function FriendProfile({ friend, anySelected }) {
               </View>
             </View>
             <View style={styles.buttons}>
-              <Button1 color="#9EBEFE" title="Send challenge"></Button1>
+              <Button1 color="#9EBEFE" title="Send challenge" action={() => navigation.navigate("SendChallenge")}></Button1>
               <Button1 color="#E49773" title="Remove friend"></Button1>
             </View>
           </View>
@@ -125,6 +127,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flex: 1.5,
+    height: 50,
     justifyContent: "center",
     flexDirection: "row",
     paddingBottom: 18,

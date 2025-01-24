@@ -28,6 +28,7 @@ import OnboardingScreen from "./src/screens/OnboardingScreen.js";
 import BuddiesScreen from "./src/screens/BuddiesScreen.js";
 import AddBuddiesScreen from "./src/screens/AddBuddiesScreen.js";
 import AddCharacterScreen from "./src/screens/AddCharacterScreen.js";
+import SendChallengeScreen from "./src/screens/SendChallengeScreen.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -116,6 +117,11 @@ function MainNavigator() {
              <Stack.Screen
                 name="AddCharacter"
                 component={AddCharacterScreen}
+                options={{ headerShown: false }} 
+            />
+            <Stack.Screen
+                name="SendChallenge"
+                component={SendChallengeScreen}
                 options={{ headerShown: false }} 
             />
           </>

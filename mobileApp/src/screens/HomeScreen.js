@@ -178,6 +178,8 @@ const styles = StyleSheet.create({
   },
   bottomHalf: {
     flex: 1,
+    width: "100%",
+    height: "100%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: "#FCF4E7",
@@ -186,6 +188,8 @@ const styles = StyleSheet.create({
   },
   calendar: {
     flex: 1.5,
+    width: "100%",
+    height: "100%",
   },
   tasks: {
     flex: 2,

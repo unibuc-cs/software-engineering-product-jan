@@ -1,13 +1,12 @@
 import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
 import TaskList from "../components/TaskList";
-import {useTasksContext} from "../contexts/tasks.context";
+import { useTasksContext } from "../contexts/tasks.context";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigation} from "@react-navigation/native";
-
+import { useNavigation } from "@react-navigation/native";
 
 export default function TasksScreen() {
-  const {getAllUserActivities} = useTasksContext();
+  const { getAllUserActivities } = useTasksContext();
   const [allTasks, setAllTasks] = useState([]);
 
   const navigation = useNavigation();
@@ -20,24 +19,22 @@ export default function TasksScreen() {
     });
   }, [currentRoute]);
 
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.wrapper}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}> All Tasks </Text>
-        </View>
-        <View>
-          <Text style={styles.subtitle}>Unscheduled</Text>
-          <TaskList scheduled={false} tasks={allTasks}></TaskList>
-        </View>
-        <View>
-          <Text style={styles.subtitle}>Ongoing</Text>
+      {/* <ScrollView style={styles.wrapper}> */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}> All Tasks </Text>
+      </View>
+      <View>
+        <Text style={styles.subtitle}>Unscheduled</Text>
+        <TaskList scheduled={false} tasks={allTasks}></TaskList>
+      </View>
+      <View>
+        <Text style={styles.subtitle}>Ongoing</Text>
 
-          <TaskList scheduled={true} tasks={allTasks}></TaskList>
-
-        </View>
-      </ScrollView>
+        <TaskList scheduled={true} tasks={allTasks}></TaskList>
+      </View>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 }
