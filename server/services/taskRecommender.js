@@ -41,8 +41,8 @@ async function taskRecommender(userId, Db) {
     seed: 0,
     randomize_seed: true,
     max_new_tokens: 100,
-    temperature: 0.9,
-    top_p: 0.8,
+    temperature: 0.8,
+    top_p: 0.85,
   };
 
   // --- Gradio inference with retry ---
@@ -117,7 +117,7 @@ async function parseResponseWithRetry(inferenceResult, params) {
  */
 function fixMalformedJSON(jsonStr) {
   // Add missing commas before "description"
-  return jsonStr.replace(/, *"description"/g, ',"description"');
+  return jsonStr.replace(/," *"description"/g, ',"description"');
 }
 
 module.exports = {
