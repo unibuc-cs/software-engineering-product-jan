@@ -16,7 +16,7 @@ import Intelligence from "../svg-components/Intelligence";
 import Wellness from "../svg-components/Wellness";
 import Skill from "../svg-components/Skill";
 import { useTasksContext } from "../contexts/tasks.context";
-export default function NewHabitCreation() {
+export default function EditHabitScreen() {
   const [title, setTitle] = React.useState("");
   const [titleEmoji, setTitleEmoji] = React.useState("");
 
@@ -37,7 +37,7 @@ export default function NewHabitCreation() {
   const [skillCounter, setSkillCounter] = useState(1);
   const [fitnessCounter, setFitnessCounter] = useState(1);
 
-  const { createNewActivity } = useTasksContext();
+  const { editActivity } = useTasksContext();
 
   const incWellness = () => setWellnessCounter(wellnessCounter + 1);
   const decWellness = () => {
@@ -91,11 +91,11 @@ export default function NewHabitCreation() {
     console.log(data);
 
     try {
-      const response = await createNewActivity(data);
+      const response = await editActivity(data);
       console.log(response);
     } catch (error) {
       console.log(
-        "Error creating activity:",
+        "Error editing activity:",
         error.response ? error.response.data : error.message
       );
     }
@@ -129,7 +129,7 @@ export default function NewHabitCreation() {
       <ScrollView style={styles.containerScroll}>
         <SafeAreaView style={styles.container}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>New Habit</Text>
+            <Text style={styles.title}>Edit Habit</Text>
           </View>
 
           <View style={styles.taskContainer}>
@@ -299,7 +299,7 @@ export default function NewHabitCreation() {
                   onPress={handleSubmit}
                   style={styles.submitButton}
                 >
-                  <Text style={styles.submitText}> Submit </Text>
+                  <Text style={styles.submitText}> Save changes </Text>
                 </TouchableOpacity>
               </View>
             </View>

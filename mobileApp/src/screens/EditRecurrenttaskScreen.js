@@ -18,7 +18,7 @@ import Wellness from "../svg-components/Wellness";
 import Skill from "../svg-components/Skill";
 import { useTasksContext } from "../contexts/tasks.context";
 
-export default function NewRecurrentTaskCreation() {
+export default function EditRecurrentTask() {
   const [title, setTitle] = useState("");
   const [titleEmoji, setTitleEmoji] = useState("");
   const [mode, setMode] = useState("date");
@@ -28,7 +28,7 @@ export default function NewRecurrentTaskCreation() {
 
   const { user } = useAuthContext();
 
-  const { createNewActivity } = useTasksContext();
+  const { editActivity } = useTasksContext();
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || dueDate;
@@ -106,11 +106,11 @@ export default function NewRecurrentTaskCreation() {
     console.log(objectToSend);
 
     try {
-      const response = await createNewActivity(objectToSend);
-      console.log("Create activity response:", response);
+      const response = await editActivity(objectToSend);
+      console.log("Edit activity response:", response);
     } catch (error) {
       console.log(
-        "Error creating activity:",
+        "Error editing activity:",
         error.response ? error.response.data : error.message
       );
     }
@@ -140,7 +140,7 @@ export default function NewRecurrentTaskCreation() {
     <ScrollView style={styles.containerScroll}>
       <SafeAreaView style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>New Recurrent Task</Text>
+          <Text style={styles.title}>Edit Recurrent Task</Text>
         </View>
 
         <View style={styles.taskContainer}>
@@ -324,7 +324,7 @@ export default function NewRecurrentTaskCreation() {
                 onPress={handleSubmit}
                 style={styles.submitButton}
               >
-                <Text style={styles.submitText}> Submit </Text>
+                <Text style={styles.submitText}> Save changes </Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -4,10 +4,10 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import TaskCard from "../components/TaskCard";
 import TrashBin from "../svg-components/TrashBin";
-import Edit from "../../assets/edit-pen.png";
 import { useTasksContext } from "../contexts/tasks.context";
 import { useNavigation } from "@react-navigation/native";
 export default function TaskScreen({ route }) {
@@ -28,6 +28,7 @@ export default function TaskScreen({ route }) {
   };
 
   const { deleteActivity } = useTasksContext();
+  const { editActivity } = useTasksContext();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,11 +43,37 @@ export default function TaskScreen({ route }) {
                 <TaskBackground width = "100%" height = "100%"/>
             </View> */}
       <View style={styles.titleContainer}>
-        {/* for alignment - put here the edit button */}
+        {/* Display TrashBin for delete */}
         <TrashBin width="25" height="25" fill="none" />
+
+        {/* Display task type */}
         <Text style={styles.title}>
           <Text style={styles.sectionContent}> {taskType} </Text>
         </Text>
+
+        {/* Edit Button */}
+        <TouchableOpacity
+          onPress={() => {
+            // Handle edit functionality here
+            editActivity(task.id);
+            if (taskType === "Habit") {
+              navigation.navigate("EditHabit");
+            } else if (taskType === "Task") {
+              navigation.navigate("EditTask");
+            } else {
+              navigation.navigate("EditRecurrentTask");
+            }
+          }}
+          style={styles.editButton}
+        >
+          {/* Use Image component to render the Edit icon */}
+          <Image
+            source={require("../../assets/edit.png")}
+            style={styles.editIcon}
+          />
+        </TouchableOpacity>
+
+        {/* Delete Button */}
         <TouchableOpacity
           onPress={() => {
             deleteActivity(task.id);
@@ -57,6 +84,7 @@ export default function TaskScreen({ route }) {
           <TrashBin width="30" height="30" />
         </TouchableOpacity>
       </View>
+
       <View style={styles.taskContainer}>
         <View style={styles.taskHeader}>
           <View style={styles.taskTitleWrapper}>
@@ -101,10 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "500",
-  },
   deleteButton: {},
   taskContainer: {
     flex: 1,
@@ -138,5 +162,24 @@ const styles = StyleSheet.create({
   },
   taskDetailsContainer: {
     flex: 3,
+  },
+  editIcon: {
+    width: 25,
+    height: 25,
+  },
+
+  title: {
+    flex: 1,
+    fontSize: 25,
+    fontWeight: "600",
+  },
+  sectionContent: {
+    fontSize: 16,
+  },
+  deleteButton: {
+    padding: 5,
+  },
+  editButton: {
+    padding: 5,
   },
 });
