@@ -1,40 +1,52 @@
-import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
-import TaskList from "../components/TaskList";
-import { useTasksContext } from "../contexts/tasks.context";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, ScrollView, Text, StyleSheet, View } from "react-native";
+import TaskList from "../components/TaskList"; // Make sure the path is correct
+import { useTasksContext } from "../contexts/tasks.context"; // Assuming you have a context for this
 
 export default function TasksScreen() {
   const { getAllUserActivities } = useTasksContext();
   const [allTasks, setAllTasks] = useState([]);
+  const [loading, setLoading] = useState(true); // Track loading state
 
-  const navigation = useNavigation();
-  const routes = useNavigation((state) => state?.routes || []);
-  const currentRoute = routes[routes.length - 1]?.name;
-
+  // Function to fetch tasks
   useEffect(() => {
-    getAllUserActivities().then((data) => {
+    const fetchTasks = async () => {
+      setLoading(true); // Set loading state
+      const data = await getAllUserActivities(); // Assuming this returns tasks
       setAllTasks(data);
-    });
-  }, [currentRoute]);
+      setLoading(false); // Stop loading when tasks are fetched
+    };
+
+    fetchTasks();
+  }, []); // Empty array to only run once when the component mounts
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <ScrollView style={styles.wrapper}> */}
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> All Tasks </Text>
-      </View>
-      <View>
+      <ScrollView style={styles.wrapper}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}> All Tasks </Text>
+          {loading ? (
+            <Text style={styles.loadingText}>Loading tasks...</Text>
+          ) : (
+            <View>
+              <Text style={styles.subtitle}>Unscheduled</Text>
+              <TaskList tasks={allTasks} scheduled={false} /> // Pass the tasks
+              once they are fetched
+              <Text style={styles.subtitle}>Ongoing</Text>
+              <TaskList tasks={allTasks} scheduled={true} />
+            </View>
+          )}
+        </View>
+        {/* <View>
         <Text style={styles.subtitle}>Unscheduled</Text>
         <TaskList scheduled={false} tasks={allTasks}></TaskList>
       </View>
       <View>
         <Text style={styles.subtitle}>Ongoing</Text>
 
-        <TaskList scheduled={true} tasks={allTasks}></TaskList>
-      </View>
-      {/* </ScrollView> */}
+        <TaskList scheduled={true} tasks={allTasks}></TaskList> */}
+        {/* </View> */}
+      </ScrollView>
     </SafeAreaView>
   );
 }

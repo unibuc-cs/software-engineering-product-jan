@@ -26,7 +26,7 @@ export const TasksContextProvider = ({ children }) => {
     //  console.log("User", user);
     try {
       const response = await axios.get(
-        `http://192.168.50.156:4000/api/activities/${user.uid}`,
+        `http://192.168.0.120:4000/api/activities/${user.uid}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export const TasksContextProvider = ({ children }) => {
   const createNewActivity = async (activity) => {
     try {
       const response = await axios.post(
-        `http://192.168.50.156:4000/api/activities`,
+        `http://192.168.0.120:4000/api/activities`,
         activity,
         {
           headers: {
