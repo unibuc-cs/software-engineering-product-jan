@@ -147,15 +147,17 @@ function MainNavigator() {
 
 function App() {
   return (
-    <SuggestionsProvider>
+    
     <AuthContextProvider>
       <TasksContextProvider>
+      <SuggestionsProvider>
         <NavigationContainer>
           <MainNavigator />
         </NavigationContainer>
+    </SuggestionsProvider>
+
       </TasksContextProvider>
     </AuthContextProvider>
-    </SuggestionsProvider>
   );
 }
 

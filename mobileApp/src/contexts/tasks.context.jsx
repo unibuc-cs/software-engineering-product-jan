@@ -27,7 +27,8 @@ export const TasksContextProvider = ({ children }) => {
   const [recurrentTasks, setRecurrentTasks] = useState([]);
 
   const getAllUserActivities = async () => {
-    //  console.log("User", user);
+    console.log(`${API_URL_DEV}/api/activities/${user.uid}`);
+
     try {
       console.log(API_URL_DEV);
       const response = await axios.get(
@@ -44,7 +45,7 @@ export const TasksContextProvider = ({ children }) => {
       return response.data;
     } catch (error) {
       console.log(
-        "Error fetching user activities:",
+        "Error fetching user activities: dd",
         error.response ? error.response.data : error.message
       );
     }
