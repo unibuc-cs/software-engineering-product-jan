@@ -15,7 +15,6 @@ export const useTasksContext = () => {
 };
 
 export const TasksContextProvider = ({ children }) => {
-
   const { user } = useAuthContext();
 
   const [activities, setActivities] = useState([]);
@@ -24,7 +23,7 @@ export const TasksContextProvider = ({ children }) => {
   const [recurrentTasks, setRecurrentTasks] = useState([]);
 
   const getAllUserActivities = async () => {
-  //  console.log("User", user);
+    //  console.log("User", user);
     try {
       const response = await axios.get(
         `http://192.168.50.156:4000/api/activities/${user.uid}`,
@@ -34,7 +33,7 @@ export const TasksContextProvider = ({ children }) => {
           },
         }
       );
-    //  console.log("Activities response:", response.data); // Log the response
+      //  console.log("Activities response:", response.data); // Log the response
       setActivities(response.data);
       filterByType();
       return response.data;
@@ -47,16 +46,12 @@ export const TasksContextProvider = ({ children }) => {
   };
 
   const filterByType = () => {
-
     setHabits(activities.filter((activity) => activity.type === "habit"));
     setRecurrentTasks(
       activities.filter((activity) => activity.type === "reccuring")
     );
     setTasks(activities.filter((activity) => activity.type === "one-time"));
-
-  }
-
-
+  };
 
   /*
 
@@ -95,7 +90,6 @@ export const TasksContextProvider = ({ children }) => {
 
   */
 
-
   const createNewActivity = async (activity) => {
     try {
       const response = await axios.post(
@@ -115,8 +109,7 @@ export const TasksContextProvider = ({ children }) => {
         error.response ? error.response.data : error.message
       );
     }
-  }
-
+  };
 
   const deleteActivity = async (activityId) => {
     try {
@@ -136,11 +129,10 @@ export const TasksContextProvider = ({ children }) => {
         error.response ? error.response.data : error.message
       );
     }
-  }
+  };
 
-  //expected changes structure: [{ "field1": "value1", "field2": "value2", ... }] 
+  //expected changes structure: [{ "field1": "value1", "field2": "value2", ... }]
   const editActivity = async (activityId, changes = {}) => {
-
     try {
       const response = await axios.put(
         `http://192.168.10.3:4000/api/activities/${activityId}`,
@@ -153,43 +145,38 @@ export const TasksContextProvider = ({ children }) => {
       );
       console.log("Edit activity response:", response.data); // Log the response
       return response.data;
+    } catch (error) {
+      console.log(
+        "Error editing activity:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
 
-  }
-  catch (error) {
-    console.log(
-      "Error editing activity:",
-      error.response ? error.response.data : error.message
-    );
-  }
-
-}
-
-
-const completeActivity = async (activityId, isDone) => {
-  try {
-    const response = await axios.put(
-      `http://192.168.50.156:4000/api/activities/complete/${activityId}`,
-      { parameter: isDone ? "done" : "undone" },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    // Update local state after completion
-    setActivities((prev) =>
-      prev.map((activity) =>
-        activity.id === activityId ? { ...activity, done: isDone } : activity
-      )
-    );
-  } catch (error) {
-    console.log(
-      "Error completing activity:",
-      error.response ? error.response.data : error.message
-    );
-  }
-};
-
+  const completeActivity = async (activityId, isDone) => {
+    try {
+      const response = await axios.put(
+        `http://192.168.50.156:4000/api/activities/complete/${activityId}`,
+        { parameter: isDone ? "done" : "undone" },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // Update local state after completion
+      setActivities((prev) =>
+        prev.map((activity) =>
+          activity.id === activityId ? { ...activity, done: isDone } : activity
+        )
+      );
+    } catch (error) {
+      console.log(
+        "Error completing activity:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
 
   //stats object : { "creativity": "value1", "inteligence": "value2", ... }
 
@@ -204,15 +191,14 @@ const completeActivity = async (activityId, isDone) => {
           },
         }
       );
-      console.log("Increase stats response:", response.data); 
+      console.log("Increase stats response:", response.data);
     } catch (error) {
       console.log(
         "Error increasing stats:",
         error.response ? error.response.data : error.message
       );
     }
-  }
-
+  };
 
   const state = {
     activities,
@@ -224,7 +210,7 @@ const completeActivity = async (activityId, isDone) => {
     deleteActivity,
     editActivity,
     completeActivity,
-    increaseStats
+    increaseStats,
   };
 
   return (
