@@ -60,7 +60,7 @@ async function taskRecommender(userId, Db) {
   } catch (error) {
     throw new Error(`Error parsing response after multiple attempts: ${error.message}`);
   }
-
+  console.log("Parsed response:", parsedResponse);
   return parsedResponse;
 }
 

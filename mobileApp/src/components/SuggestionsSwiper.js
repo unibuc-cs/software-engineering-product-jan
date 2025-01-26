@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import SwipeCard from "./SwipeCard";
-// import { useSuggestionsContext } from "../contexts/suggestions.context";
+import { useSuggestionsContext } from "../contexts/suggestions.context";
+import { use } from "react";
 // import { use } from "../../../server/routes/user";
 
 const { width, height } = Dimensions.get('window');
@@ -85,20 +86,40 @@ const labels = {
 export default function SuggestionsSwiper({suggestions}) {
     // const suggestions = useSuggestionsContext();
     const numSuggestions = suggestions.length;
-    const [picked, setPicked] = useState(0); // counter - we want it to be reset at midnight...
+    // const [picked, setPicked] = useState(0); // counter - we want it to be reset at midnight...
+    const [swiped, setSwiped] = useState(0); // counter - we want it to be reset at midnight...
     // initially we have all the suggestions, but the list gets shorter as we choose tasks
     const [suggestionsList, setSuggestionsList] = useState(suggestions);
     // for each suggestions see if it was picked or not
     const [selectedTasks, setSelectedTasks] = useState([]); // the selected tasks
+    const [discardedTasks, setDiscardedTasks] = useState([]); // the discarded tasks
 
+    const { addPickedSuggestions } = useSuggestionsContext();
     const pickTask = (pickedSuggestionIndex) => {
         // we just add the card to the selected tasks and increase the counter
+        // console.log("Picked: " + suggestionsList[pickedSuggestionIndex].title);
         setSelectedTasks([...selectedTasks, suggestionsList[pickedSuggestionIndex]]);
-        setPicked(picked + 1);
+        setSwiped(swiped + 1);
+    };
+
+    const usePickedTasks = () => {
+        console.log("Picked tasks: " )
+         selectedTasks.forEach(element => {
+            console.log(element.title); 
+
+          
+        });
+        addPickedSuggestions(selectedTasks);
+
     };
 
     const addBack = (notPickedIndex) => {
         setSuggestionsList([...suggestionsList, suggestionsList[notPickedIndex]]);
+    };
+
+    const discardTask = (index) => {
+        setSwiped(swiped + 1);
+        setDiscardedTasks([...discardedTasks, suggestionsList[index]]);
     };
 
   const checkLast = (index) => {
@@ -135,7 +156,7 @@ export default function SuggestionsSwiper({suggestions}) {
     <View style={styles.containerExterior}>
       <View style={styles.container}>
         {
-            picked < numSuggestions &&
+            swiped< numSuggestions &&
             <Swiper
                 cards={suggestionsList}
                 renderCard={(card) => {
@@ -146,7 +167,7 @@ export default function SuggestionsSwiper({suggestions}) {
                 overlayLabels={labels}
                 verticalSwipe={false}
                 onSwipedLeft={pickTask}
-                onSwipedRight={addBack}
+                onSwipedRight={discardTask}
                 backgroundColor="transparent"
                 cardIndex={0}
                 stackSize={3}
@@ -155,7 +176,11 @@ export default function SuggestionsSwiper({suggestions}) {
                 cardStyle={styles.card}
             ></Swiper>
         }
-        {picked == numSuggestions && ( // when we run out of suggested tasks
+        {console.log("swiped: " + swiped)}
+        {console.log("no selected tasks: " + selectedTasks.length)} 
+        {console.log(selectedTasks[swiped-1])}
+        {swiped  == numSuggestions && ( 
+          // when we run out of suggested tasks
           <View style={styles.messageContainer}>
             <View style={styles.top}></View>
             <View style={styles.messageWrapper}>
@@ -165,9 +190,10 @@ export default function SuggestionsSwiper({suggestions}) {
             </View>
           </View>
         )}
+        {swiped == numSuggestions ? usePickedTasks() : null}
       </View>
       <View style={styles.subtitleSection}>
-        <Text style={styles.subtitle}> Selected for today: {picked} </Text>
+        {/* <Text style={styles.subtitle}> Selected for today: {picked} </Text> */}
       </View>
     </View>
   );

@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "start": "expo start --tunnel",
+    "start2": "expo start ",
+
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
