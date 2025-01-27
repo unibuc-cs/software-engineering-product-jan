@@ -1,8 +1,19 @@
-const importDynamic = new Function("modulePath", "return import(modulePath)");
+// Dynamic import handler with explicit path for "@gradio/client"
+const importDynamic = async (modulePath) => {
+  try {
+    if (modulePath === "@gradio/client") {
+      // Static import fallback to force bundling with vercel/ncc
+      const { Client } = await import("@gradio/client");
+      return { Client };
+    }
+    return await import(modulePath); // Use dynamic import for other modules
+  } catch (error) {
+    console.error(`Dynamic import failed for ${modulePath}:`, error);
+    throw error;
+  }
+};
 
 async function taskRecommender(userId, Db) {
-  const { Client } = await importDynamic("@gradio/client");
-
   // --- Fetch user activities ---
   const activitiesRef = Db.collection("activities");
   let activities = [];
@@ -13,7 +24,7 @@ async function taskRecommender(userId, Db) {
     throw new Error(`Error fetching activities: ${error.message}`);
   }
 
-  // Format past tasks
+  // Format past tasks for the model
   const pastTasks = activities.map((activity) => ({
     title: activity.title,
     description: activity.description,
@@ -60,6 +71,7 @@ async function taskRecommender(userId, Db) {
   } catch (error) {
     throw new Error(`Error parsing response after multiple attempts: ${error.message}`);
   }
+
   console.log("Parsed response:", parsedResponse);
   return parsedResponse;
 }
@@ -69,6 +81,7 @@ async function taskRecommender(userId, Db) {
  */
 async function runInferenceWithRetry(params) {
   const { Client } = await importDynamic("@gradio/client");
+
   let temperature = params.temperature;
   const client = await Client.connect("raduqus/llm_test2", {
     hf_token: process.env.HF_API_TOKEN,
@@ -76,10 +89,11 @@ async function runInferenceWithRetry(params) {
 
   while (temperature > 0.1) {
     try {
+      // Try inference with the current temperature
       return await client.predict("/infer", params);
     } catch (err) {
       console.error(`Inference failed at temperature ${temperature}. Retrying...`);
-      temperature -= 0.1;
+      temperature -= 0.1; // Decrease temperature and retry
       params.temperature = temperature;
     }
   }
@@ -97,7 +111,7 @@ async function parseResponseWithRetry(inferenceResult, params) {
       return JSON.parse(correctedData);
     } catch (err) {
       console.error(`Parsing failed at temperature ${temperature}. Retrying inference...`);
-      temperature -= 0.1;
+      temperature -= 0.1; // Decrease temperature and retry parsing
       params.temperature = temperature;
 
       // Re-run inference at lower temperature

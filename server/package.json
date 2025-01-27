@@ -1,39 +1,32 @@
 {
-	"name": "gamifylife",
-	"version": "1.0.0",
-	"description": "backend for productivity-app",
-	"main": "server.js",
-	"scripts": {
-		"dev": "nodemon server.js",
-		"deploy": "firebase deploy --only functions:api"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/SoftNestSol/GamifyLife.git"
-	},
-	"keywords": [
-		"none"
-	],
-	"author": "MDS",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/SoftNestSol/GamifyLife/issues"
-	},
-	"homepage": "https://github.com/SoftNestSol/GamifyLife#readme",
-	"dependencies": {
-		"axios": "^1.7.7",
-		"cors": "^2.8.5",
-		"dotenv": "^16.4.7",
-		"express": "^4.21.2",
-		"firebase-functions": "^5.0.1",
-		"mssql": "^11.0.1",
-		"nodemon": "^3.1.0",
-		"openai": "^4.73.0"
-	},
-	"engines": {
-		"node": "20"
-	},
-	"devDependencies": {
-		"@gradio/client": "^1.10.0"
-	}
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions:api",
+    "logs": "firebase functions:log",
+    "dev": "nodemon server.js"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "main" :"index.js",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1",
+    "nodemon": "^3.1.0",
+    "openai": "^4.80.1",
+	"@gradio/client": "^1.10.0"
+  },
+  "devDependencies": {
+    "@gradio/client": "^1.10.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
 }
