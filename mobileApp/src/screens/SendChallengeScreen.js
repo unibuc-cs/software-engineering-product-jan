@@ -18,8 +18,9 @@ import Intelligence from "../svg-components/Intelligence";
 import Wellness from "../svg-components/Wellness";
 import Skill from "../svg-components/Skill";
 import { useTasksContext } from "../contexts/tasks.context";
+import {useFriendsContext} from "../contexts/friends.context.jsx";
 
-export default function SendChallengeScreen() {
+export default function SendChallengeScreen(args) {
   const { user } = useAuthContext();
   const [title, setTitle] = React.useState("");
   const [titleEmoji, setTitleEmoji] = React.useState("");
@@ -28,6 +29,9 @@ export default function SendChallengeScreen() {
   const [intelligenceCounter, setIntelligenceCounter] = useState(1);
   const [skillCounter, setSkillCounter] = useState(1);
   const [fitnessCounter, setFitnessCounter] = useState(1);
+
+  const friend_id = args['route']['params'];
+  const {sendTaskToFriend} = useFriendsContext();
 
   const incWellness = () => setWellnessCounter(wellnessCounter + 1);
   const decWellness = () => {
@@ -57,8 +61,6 @@ export default function SendChallengeScreen() {
   const [createdAt, setCreatedAt] = useState(new Date());
   const done = 0;
 
-  const { createNewActivity } = useTasksContext();
-
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || createdAt;
     setShow(Platform.OS === "ios");
@@ -73,7 +75,7 @@ export default function SendChallengeScreen() {
   const handleSubmit = async () => {
     const newTask = {
       from_app: false,
-      from_buddy: null,
+      from_buddy: user.uid,
       type: type,
       created_at: createdAt,
       done: done,
@@ -90,7 +92,7 @@ export default function SendChallengeScreen() {
     console.log(newTask);
 
     try {
-      const response = await createNewActivity(newTask);
+      const response = await sendTaskToFriend(friend_id, newTask);
       console.log(response);
     } catch (error) {
       console.log(error);

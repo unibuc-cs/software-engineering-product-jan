@@ -29,6 +29,7 @@ import BuddiesScreen from "./src/screens/BuddiesScreen.js";
 import AddBuddiesScreen from "./src/screens/AddBuddiesScreen.js";
 import AddCharacterScreen from "./src/screens/AddCharacterScreen.js";
 import SendChallengeScreen from "./src/screens/SendChallengeScreen.js";
+import { FriendsContext, FriendsContextProvider } from "./src/contexts/friends.context.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -149,6 +150,7 @@ function App() {
   return (
     
     <AuthContextProvider>
+      <FriendsContextProvider>
       <TasksContextProvider>
       <SuggestionsProvider>
         <NavigationContainer>
@@ -157,6 +159,7 @@ function App() {
     </SuggestionsProvider>
 
       </TasksContextProvider>
+      </FriendsContextProvider>
     </AuthContextProvider>
   );
 }

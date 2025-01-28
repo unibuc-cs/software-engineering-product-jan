@@ -2,9 +2,11 @@ import { View, StyleSheet, Text, FlatList, Pressable } from "react-native";
 import { useState } from "react";
 import FriendRoundCard from "./FriendRoundCard";
 import FriendProfile from "./FriendProfile";
+import { useEffect } from "react";
+import { useFriendsContext } from "../contexts/friends.context";
 
 // mock data for friends
-const friends = [
+/*const friends = [
   {
     user_id: "aba",
     name: "Maria",
@@ -56,10 +58,24 @@ const friends = [
     },
   },
 ];
+*/
 
 export default function Friends() {
   const [selectedFriend, setSelectedFriend] = useState({});
   const [areThereSelected, setAreThereSelected] = useState(false);
+
+      const[friends, setFriends] = useState(null);
+  
+    const {getUserFriends} = useFriendsContext();
+  
+  
+    useEffect(() => {
+      getUserFriends().then((data) => {
+        console.log("Friends data:", data);
+        setFriends(data);
+      }
+      );
+    }, []);
 
   const handleSelect = (friend) => {
     setSelectedFriend(friend);

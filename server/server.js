@@ -38,9 +38,9 @@ app.use("/api/recommender", recommenderRouter);
 app.use("/api/friends", friendsRouter);
 
 
-// app.listen(port,'0.0.0.0' ,() => {
-// 	console.log(`Server is running on port ${port}`
-// 	);
-// });
+ app.listen(port,'0.0.0.0' ,() => {
+ 	console.log(`Server is running on port ${port}`
+ 	);
+ });
 
 exports.api = functions.https.onRequest(app);
