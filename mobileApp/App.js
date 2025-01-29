@@ -31,6 +31,8 @@ import AddCharacterScreen from "./src/screens/AddCharacterScreen.js";
 import SendChallengeScreen from "./src/screens/SendChallengeScreen.js";
 import EditHabitScreen from "./src/screens/EditHabitScreen.js";
 import EditRecurrentTaskScreen from "./src/screens/EditRecurrenttaskScreen.js";
+import EditTaskScreen from "./src/screens/EditTaskScreen.js";import EditHabitScreen from "./src/screens/EditHabitScreen.js";
+import EditRecurrentTaskScreen from "./src/screens/EditRecurrenttaskScreen.js";
 import EditTaskScreen from "./src/screens/EditTaskScreen.js";
 import { FriendsContext, FriendsContextProvider } from "./src/contexts/friends.context.jsx";
 
@@ -46,6 +48,9 @@ function MainNavigator() {
   }
 
   const shouldShowNavbar =
+    currentRoute !== "Login" &&
+    currentRoute !== "Register" &&
+    currentRoute !== "Onboarding";
     currentRoute !== "Login" &&
     currentRoute !== "Register" &&
     currentRoute !== "Onboarding";
@@ -124,10 +129,30 @@ function MainNavigator() {
               name="AddCharacter"
               component={AddCharacterScreen}
               options={{ headerShown: false }}
+              />
+            <Stack.Screen
+              name="AddCharacter"
+              component={AddCharacterScreen}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="SendChallenge"
               component={SendChallengeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EditTask"
+              component={EditTaskScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EditHabit"
+              component={EditHabitScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EditRecurrentTask"
+              component={EditRecurrentTaskScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -169,17 +194,17 @@ function MainNavigator() {
 function App() {
   return (
     
-    <AuthContextProvider>
-      <FriendsContextProvider>
+      <AuthContextProvider>
+        <FriendsContextProvider>
       <TasksContextProvider>
-      <SuggestionsProvider>
+        <SuggestionsProvider>
         <NavigationContainer>
-          <MainNavigator />
-        </NavigationContainer>
-    </SuggestionsProvider>
+            <MainNavigator />
+          </NavigationContainer>
+      </SuggestionsProvider>
 
       </TasksContextProvider>
-      </FriendsContextProvider>
+        </FriendsContextProvider>
     </AuthContextProvider>
   );
 }
