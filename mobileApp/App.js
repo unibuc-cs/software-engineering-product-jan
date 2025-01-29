@@ -31,10 +31,11 @@ import AddCharacterScreen from "./src/screens/AddCharacterScreen.js";
 import SendChallengeScreen from "./src/screens/SendChallengeScreen.js";
 import EditHabitScreen from "./src/screens/EditHabitScreen.js";
 import EditRecurrentTaskScreen from "./src/screens/EditRecurrenttaskScreen.js";
-import EditTaskScreen from "./src/screens/EditTaskScreen.js";import EditHabitScreen from "./src/screens/EditHabitScreen.js";
-import EditRecurrentTaskScreen from "./src/screens/EditRecurrenttaskScreen.js";
 import EditTaskScreen from "./src/screens/EditTaskScreen.js";
-import { FriendsContext, FriendsContextProvider } from "./src/contexts/friends.context.jsx";
+import {
+  FriendsContext,
+  FriendsContextProvider,
+} from "./src/contexts/friends.context.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,7 +52,7 @@ function MainNavigator() {
     currentRoute !== "Login" &&
     currentRoute !== "Register" &&
     currentRoute !== "Onboarding";
-    currentRoute !== "Login" &&
+  currentRoute !== "Login" &&
     currentRoute !== "Register" &&
     currentRoute !== "Onboarding";
 
@@ -129,30 +130,10 @@ function MainNavigator() {
               name="AddCharacter"
               component={AddCharacterScreen}
               options={{ headerShown: false }}
-              />
-            <Stack.Screen
-              name="AddCharacter"
-              component={AddCharacterScreen}
-              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="SendChallenge"
               component={SendChallengeScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="EditTask"
-              component={EditTaskScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="EditHabit"
-              component={EditHabitScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="EditRecurrentTask"
-              component={EditRecurrentTaskScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -193,18 +174,16 @@ function MainNavigator() {
 
 function App() {
   return (
-    
-      <AuthContextProvider>
-        <FriendsContextProvider>
-      <TasksContextProvider>
-        <SuggestionsProvider>
-        <NavigationContainer>
-            <MainNavigator />
-          </NavigationContainer>
-      </SuggestionsProvider>
-
-      </TasksContextProvider>
-        </FriendsContextProvider>
+    <AuthContextProvider>
+      <FriendsContextProvider>
+        <TasksContextProvider>
+          <SuggestionsProvider>
+            <NavigationContainer>
+              <MainNavigator />
+            </NavigationContainer>
+          </SuggestionsProvider>
+        </TasksContextProvider>
+      </FriendsContextProvider>
     </AuthContextProvider>
   );
 }
