@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "./auth.context";
 
-import {API_URL_DEV, API_URL_PROD} from "@env";
+import env from "../../env.json";
 
 
 
@@ -26,11 +26,12 @@ export const TasksContextProvider = ({ children }) => {
   const [habits, setHabits] = useState([]);
   const [recurrentTasks, setRecurrentTasks] = useState([]);
 
+
+  const API_URL_DEV = env.API_URL;
+
   const getAllUserActivities = async () => {
-    console.log(`${API_URL_DEV}/api/activities/${user.uid}`);
 
     try {
-      console.log(API_URL_DEV);
       const response = await axios.get(
         `${API_URL_DEV}/api/activities/${user.uid}`,
         {
@@ -39,7 +40,6 @@ export const TasksContextProvider = ({ children }) => {
           },
         }
       );
-      //  console.log("Activities response:", response.data); // Log the response
       setActivities(response.data);
       filterByType();
       return response.data;

@@ -32,6 +32,8 @@ import SendChallengeScreen from "./src/screens/SendChallengeScreen.js";
 import EditHabitScreen from "./src/screens/EditHabitScreen.js";
 import EditRecurrentTaskScreen from "./src/screens/EditRecurrenttaskScreen.js";
 import EditTaskScreen from "./src/screens/EditTaskScreen.js";
+import { FriendsContext, FriendsContextProvider } from "./src/contexts/friends.context.jsx";
+
 const Stack = createNativeStackNavigator();
 
 function MainNavigator() {
@@ -168,6 +170,7 @@ function App() {
   return (
     
     <AuthContextProvider>
+      <FriendsContextProvider>
       <TasksContextProvider>
       <SuggestionsProvider>
         <NavigationContainer>
@@ -176,6 +179,7 @@ function App() {
     </SuggestionsProvider>
 
       </TasksContextProvider>
+      </FriendsContextProvider>
     </AuthContextProvider>
   );
 }

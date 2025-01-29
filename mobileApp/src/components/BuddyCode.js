@@ -4,9 +4,6 @@ import {
 	Text,
 } from "react-native";
 
-// TODO: replace with a getCode()
-const code = "XYHS90JI0JS";
-
 export default function BuddyCode() {
 
     return (

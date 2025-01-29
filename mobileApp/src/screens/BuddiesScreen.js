@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import ButtonCard from "../components/ButtonCard";
 import Friends from "../components/Friends";
+import {useFriendsContext} from "../contexts/friends.context";
 
 export default function BuddiesScreen() {
     return (

@@ -1,5 +1,5 @@
-const {updateUserStats,getUserStats} = require("../services/statsService");
-const {suggestTask} = require("../services/TaskSugestions_old");
+const {updateUserStats,getUserStats} = require("../services/statsService.js");
+const {suggestTask} = require("../services/TaskSugestions_old.js");
 
 
 
