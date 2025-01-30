@@ -17,7 +17,6 @@ export default function SuggestionsScreen() {
   const handleRecommendMore = () => {
     console.log("Recommend More button pressed!");
     getSuggestions();
-
   };
 
   return (
