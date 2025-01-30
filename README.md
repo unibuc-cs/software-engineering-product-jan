@@ -1,6 +1,7 @@
 # Questify
 
 ## Table of contents
+### Intermediate Product
 <ol>
   <li> Product Vision</li>
   <li> Requirements</li>
@@ -9,6 +10,17 @@
   <li> Backlog </li>
   <li> Design </li>
 </ol>
+
+### Final Product
+1. [Architectural Description](#architectural-description) <br/>
+    i. [Product Syntesis](#product-syntesis) <br/>
+   ii. [C4 Diagrams](#c4-diagrams) <br/>
+  iii. [Non-functional Requirements](#non-functional-requirements) <br/>
+2. [QA - Testing](#qa---testing) <br/>
+3. [Security Analysis](#security-analysis) <br/>
+4. [CI/CD](#cicd) <br/>
+
+##
 
 ## Product Vision
 <li> <b>FOR</b> people in need of a productivity tool </li> 
@@ -94,5 +106,44 @@ Prioritized backlog is situated in projects on Github, based on the User Stories
 
 ![image](https://github.com/user-attachments/assets/ff6e85e7-023e-48cb-a3c8-5c279bed2110)
 
+##
 
+## Architectural Description
+### Product Syntesis
+### C4 Diagrams
+### Non-functional Requirements
+<ul>
+  <li> Load a user’s tasks within one second. </li>
+  <li> Don’t let users wait for their suggestions. </li>
+  <li> Searching a buddy should not take more than 2 seconds. </li>
+  <li> The user should be aware of any loading processes. </li>
+  <li> No loading process should take forever. </li>
+</ul>
+Our non-functional requirements regard mainly performance and responsiveness, as these were the quality attributes on which we chose to focus during the development of our project. Meeting them was accomplished by the following architectural decisions:
+<ul>
+  <li> switching to a NoSQL database whose documents have been organized in a manner in which our main search processes would be as efficient as possible </li>
+  <li> working with contexts which fetch all our user data when the app is opened, guaranteeing no loading time for the user afterwards </li>
+  <li> scheduling the LLM which provides the suggestions to asynchronously generate them at the beginning of each day; this way, our users won’t have to wait for the tasks to generate (~ 8 seconds / task) the first time they enter the suggestions screen </li>
+</ul>
 
+## QA - Testing
+
+## Security Analysis
+Main Threats: 
+<ul>
+  <li> No Data Encryption </li>
+  <li> Unsafe Communication Protocol (HTTP) </li>
+  <li> Insecure Authentication </li>
+  <li> Client-side Injection </li>
+</ul>
+
+Best Practices to Avoid Mentioned Threats:
+<ul>
+  <li> Encrypt data & use proper encryption key management solutions </li>
+  <li> Use a safer communication protocol with the server (HTTPS, TSL) </li>
+  <li> Use access control to restrict access to the stored data </li>
+  <li> Add requirements to users’ passwords to make them more robust </li>
+  <li> Add input validation in order to prevent code injection </li>
+</ul>
+
+## CI/CD
