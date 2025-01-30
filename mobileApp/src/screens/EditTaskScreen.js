@@ -3,60 +3,31 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
+  Button,
   Platform,
+  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import { useAuthContext } from "../contexts/auth.context";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import Arm from "../svg-components/arm";
 import Intelligence from "../svg-components/Intelligence";
 import Wellness from "../svg-components/Wellness";
 import Skill from "../svg-components/Skill";
 import { useTasksContext } from "../contexts/tasks.context";
 
-export default function NewRecurrentTaskCreation() {
-  const [title, setTitle] = useState("");
-  const [titleEmoji, setTitleEmoji] = useState("");
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-  const [weekInterval, setWeekInterval] = useState(1);
-  const [dueDate, setDueDate] = useState(new Date());
-
+export default function EditTaskScreen() {
   const { user } = useAuthContext();
-
-  const { createNewActivity } = useTasksContext();
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || dueDate;
-    setShow(Platform.OS === "ios");
-    setDueDate(currentDate);
-  };
+  const [title, setTitle] = React.useState("");
+  const [titleEmoji, setTitleEmoji] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const createdAt = new Date().toISOString();
-  const done = 0;
   const [wellnessCounter, setWellnessCounter] = useState(1);
   const [intelligenceCounter, setIntelligenceCounter] = useState(1);
   const [skillCounter, setSkillCounter] = useState(1);
   const [fitnessCounter, setFitnessCounter] = useState(1);
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const [days, setDays] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
 
   const incWellness = () => setWellnessCounter(wellnessCounter + 1);
   const decWellness = () => {
@@ -80,67 +51,57 @@ export default function NewRecurrentTaskCreation() {
     if (fitnessCounter > 0) setFitnessCounter(fitnessCounter - 1);
   };
 
-  const encodeDays = (days) => {
-    return days.map((day) => (day ? "1" : "0")).join("");
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const [type, setType] = useState("daily");
+  const [createdAt, setCreatedAt] = useState(new Date());
+  const done = 0;
+
+  const { editActivity } = useTasksContext();
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || createdAt;
+    setShow(Platform.OS === "ios");
+    setCreatedAt(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
   };
 
   const handleSubmit = async () => {
-    const objectToSend = {
-      title: title,
-      titleEmoji: titleEmoji,
-      type: "recurring",
+    const newTask = {
+      from_app: false,
+      from_buddy: null,
+      type: type,
       created_at: createdAt,
       done: done,
       description: description,
+      title: title,
       user_id: user.uid,
       fitness: fitnessCounter,
       skill: skillCounter,
       wellness: wellnessCounter,
       inteligence: intelligenceCounter,
       emoji: titleEmoji,
-      frequency: weekInterval,
-      days_of_the_week: encodeDays(days),
-      due_date: dueDate,
     };
 
-    console.log(objectToSend);
+    console.log(newTask);
 
     try {
-      const response = await createNewActivity(objectToSend);
-      console.log("Create activity response:", response);
+      const response = await editActivity(newTask);
+      console.log(response);
     } catch (error) {
-      console.log(
-        "Error creating activity:",
-        error.response ? error.response.data : error.message
-      );
+      console.log(error);
     }
-  };
-
-  const selectWeekday = (index) => {
-    setDays((previousDays) => {
-      const newDays = [...previousDays];
-      newDays[index] = !newDays[index];
-      return newDays;
-    });
-  };
-
-  const renderWeekdays = (day, index) => {
-    return (
-      <Text
-        key={index}
-        style={[styles.day, days[index] && styles.pickedDay]}
-        onPress={() => selectWeekday(index)}
-      >
-        {day}
-      </Text>
-    );
   };
 
   return (
     <ScrollView style={styles.containerScroll}>
       <SafeAreaView style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>New Recurrent Task</Text>
+          <Text style={styles.title}>Edit Task</Text>
         </View>
 
         <View style={styles.taskContainer}>
@@ -161,24 +122,27 @@ export default function NewRecurrentTaskCreation() {
           </View>
 
           <View style={styles.taskDetails}>
-            <View style={styles.multipleInputWrapper}>
-              <View style={styles.sectionWrapper}>
-                <Text style={styles.sectionTitle}>Frequency</Text>
-              </View>
-
-              <View style={styles.sectionWrapper}>
-                <Text style={styles.sectionTitle}>Days</Text>
-                <View style={styles.sectionContentWrapper}>
-                  <View style={styles.daysWrapper}>
-                    {renderWeekdays("M", 0)}
-                    {renderWeekdays("T", 1)}
-                    {renderWeekdays("W", 2)}
-                    {renderWeekdays("T", 3)}
-                    {renderWeekdays("F", 4)}
-                    {renderWeekdays("S", 5)}
-                    {renderWeekdays("S", 6)}
-                  </View>
-                </View>
+            <View style={styles.sectionWrapper}>
+              <Text style={styles.sectionTitle}>Date</Text>
+              <View style={styles.sectionContentWrapper}>
+                <TouchableOpacity onPress={() => showMode("date")}>
+                  <Text style={styles.sectionContent}>
+                    {/* {createdAt.toDateString()} {createdAt.toLocaleTimeString()} */}
+                    {createdAt.toDateString()}
+                  </Text>
+                  {show && (
+                    <DateTimePicker
+                      style={styles.dateStyle}
+                      testID="dateTimePicker"
+                      value={createdAt}
+                      mode={mode}
+                      is24Hour={true}
+                      display="default"
+                      onChange={onChange}
+                      onTouchCancel={() => setShow(false)}
+                    />
+                  )}
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -205,26 +169,6 @@ export default function NewRecurrentTaskCreation() {
                 />
               </View>
             </View>
-            <View style={styles.sectionContentWrapper}>
-              <Text style={styles.sectionTitle}> Due date</Text>
-              <TouchableOpacity onPress={() => showMode("date")}>
-                <Text style={styles.sectionContent}>
-                  {dueDate.toDateString()}
-                </Text>
-                {show && (
-                  <DateTimePicker
-                    style={styles.dateStyle}
-                    testID="dateTimePicker"
-                    value={dueDate}
-                    mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
-                    onTouchCancel={() => setShow(false)}
-                  />
-                )}
-              </TouchableOpacity>
-            </View>
 
             <View style={styles.statsContainer}>
               <Text style={styles.sectionTitle}> Stats </Text>
@@ -232,7 +176,7 @@ export default function NewRecurrentTaskCreation() {
                 <View>
                   <View style={styles.stat}>
                     <Text style={styles.statName}> Fitness </Text>
-                    <Arm></Arm>
+                    <Arm />
                     <View style={styles.IncContainer}>
                       <TouchableOpacity
                         style={styles.button}
@@ -271,11 +215,11 @@ export default function NewRecurrentTaskCreation() {
                   </View>
                 </View>
 
-                <View>
+                <View style={styles.aboveSubmit}>
                   <View>
                     <View style={styles.stat}>
                       <Text style={styles.statName}> Wellness </Text>
-                      <Wellness></Wellness>
+                      <Wellness />
                       <View style={styles.IncContainer}>
                         <TouchableOpacity
                           style={styles.button}
@@ -297,7 +241,7 @@ export default function NewRecurrentTaskCreation() {
                   <View>
                     <View style={styles.stat}>
                       <Text style={styles.statName}> Skill </Text>
-                      <Skill></Skill>
+                      <Skill />
                       <View style={styles.IncContainer}>
                         <TouchableOpacity
                           style={styles.button}
@@ -324,7 +268,7 @@ export default function NewRecurrentTaskCreation() {
                 onPress={handleSubmit}
                 style={styles.submitButton}
               >
-                <Text style={styles.submitText}> Submit </Text>
+                <Text style={styles.submitText}> Save changes </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -345,24 +289,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  submitButton: {
-    padding: 12,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    borderStyle: "dashed",
-  },
-  submitButtonWrapper: {
-    marginTop: 30,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  submitText: {
-    color: "black",
-    fontSize: 15,
-    fontWeight: "200",
-  },
 
   IncContainer: {
     flexDirection: "row",
@@ -370,27 +296,27 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: 30,
     paddingBottom: 40,
     backgroundColor: "#FCF4E7",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    height: "100%",
+    width: "100%",
   },
+
   containerScroll: {
+    height: "100%",
+    width: "100%",
     backgroundColor: "#FCF4E7",
-    flexGrow: 1,
   },
   taskTitleWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    marginTop: 15,
-  },
-  multipleInputWrapper: {
-    flex: 1,
-    flexDirection: "row",
+    margin: 15,
   },
   shadow: {
     position: "fixed",
@@ -401,13 +327,19 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     borderRadius: 24,
   },
+  submitButton: {
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "black",
+    borderStyle: "dashed",
+  },
   taskDetails: {
-    // height: "80%",
+    top: 10,
     width: "100%",
     alignSelf: "center",
     paddingHorizontal: "7%",
     paddingVertical: "7%",
-    marginTop: 20,
     borderRadius: 20,
     borderTopWidth: 1,
     borderLeftWidth: 1,
@@ -454,16 +386,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   stat: {
-    flexDirection: "column",
+    alignItems: "center",
     marginVertical: 5,
     justifyContent: "space-between",
-    alignItems: "center",
-    alignContent: "center",
   },
   statName: {
     fontSize: 18,
     fontWeight: "200",
-    // flexDirection: "row",
   },
   statValue: {
     fontWeight: "500",
@@ -472,27 +401,17 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "600",
   },
-  daysWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    paddingBottom: 4,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+
+  submitText: {
+    color: "black",
+    fontSize: 15,
+    fontWeight: "200",
   },
-  day: {
-    fontSize: 14,
-    display: "flex",
+  submitButtonWrapper: {
+    marginTop: 30,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    width: 20,
-    textAlign: "center",
-    textAlignVertical: "center",
-    height: 20,
-  },
-  pickedDay: {
-    backgroundColor: "#cedefe",
-    borderRadius: 5,
   },
   dateStyle: {
     backgroundColor: "#E49773",

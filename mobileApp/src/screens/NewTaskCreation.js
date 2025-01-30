@@ -23,7 +23,6 @@ export default function NewTaskCreation() {
   const { user } = useAuthContext();
   const [title, setTitle] = React.useState("");
   const [titleEmoji, setTitleEmoji] = React.useState("");
-  const [category, setCategory] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [wellnessCounter, setWellnessCounter] = useState(1);
   const [intelligenceCounter, setIntelligenceCounter] = useState(1);
@@ -58,8 +57,7 @@ export default function NewTaskCreation() {
   const [createdAt, setCreatedAt] = useState(new Date());
   const done = 0;
 
-
-  const {createNewActivity} = useTasksContext();
+  const { createNewActivity } = useTasksContext();
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || createdAt;
@@ -82,7 +80,6 @@ export default function NewTaskCreation() {
       description: description,
       title: title,
       user_id: user.uid,
-      category: category,
       fitness: fitnessCounter,
       skill: skillCounter,
       wellness: wellnessCounter,
@@ -95,13 +92,9 @@ export default function NewTaskCreation() {
     try {
       const response = await createNewActivity(newTask);
       console.log(response);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
-
-    
-   
   };
 
   return (
@@ -153,7 +146,7 @@ export default function NewTaskCreation() {
               </View>
             </View>
 
-            <View style={styles.sectionWrapper}>
+            {/* <View style={styles.sectionWrapper}>
               <Text style={styles.sectionTitle}>Category</Text>
               <View style={styles.sectionContentWrapper}>
                 <TextInput
@@ -163,7 +156,7 @@ export default function NewTaskCreation() {
                   placeholder="Category: "
                 />
               </View>
-            </View>
+            </View> */}
 
             <View style={styles.sectionWrapper}>
               <Text style={styles.sectionTitle}>Description</Text>

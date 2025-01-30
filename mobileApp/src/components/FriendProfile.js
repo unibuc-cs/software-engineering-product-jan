@@ -6,13 +6,19 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import {useState} from "react";
 import Button1 from "./Button1";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import {useFriendsContext} from "../contexts/friends.context.jsx";
+import { useEffect } from "react";
 
 export default function FriendProfile({ friend, anySelected }) {
     const navigation = useNavigation();
-  console.log(friend);
+
+    const {deleteFriend} = useFriendsContext();
+
+
   return (
     <View style={styles.container}>
       {!anySelected && (
@@ -70,8 +76,8 @@ export default function FriendProfile({ friend, anySelected }) {
               </View>
             </View>
             <View style={styles.buttons}>
-              <Button1 color="#9EBEFE" title="Send challenge" action={() => navigation.navigate("SendChallenge")}></Button1>
-              <Button1 color="#E49773" title="Remove friend"></Button1>
+              <Button1 color="#9EBEFE" title="Send challenge" action={() => navigation.navigate("SendChallenge", friend.id)}></Button1>
+              <Button1 color="#E49773" title="Remove friend" action={() => deleteFriend(friend.id) }></Button1>
             </View>
           </View>
         </View>

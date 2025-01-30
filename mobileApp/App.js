@@ -29,6 +29,13 @@ import BuddiesScreen from "./src/screens/BuddiesScreen.js";
 import AddBuddiesScreen from "./src/screens/AddBuddiesScreen.js";
 import AddCharacterScreen from "./src/screens/AddCharacterScreen.js";
 import SendChallengeScreen from "./src/screens/SendChallengeScreen.js";
+import EditHabitScreen from "./src/screens/EditHabitScreen.js";
+import EditRecurrentTaskScreen from "./src/screens/EditRecurrenttaskScreen.js";
+import EditTaskScreen from "./src/screens/EditTaskScreen.js";
+import {
+  FriendsContext,
+  FriendsContextProvider,
+} from "./src/contexts/friends.context.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +49,12 @@ function MainNavigator() {
   }
 
   const shouldShowNavbar =
-    currentRoute !== "Login" && currentRoute !== "Register" && currentRoute !== "Onboarding";
+    currentRoute !== "Login" &&
+    currentRoute !== "Register" &&
+    currentRoute !== "Onboarding";
+  currentRoute !== "Login" &&
+    currentRoute !== "Register" &&
+    currentRoute !== "Onboarding";
 
   return (
     <>
@@ -100,29 +112,44 @@ function MainNavigator() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="Onboarding"
-                component={OnboardingScreen}
-                options={{ headerShown: false }}
+              name="Onboarding"
+              component={OnboardingScreen}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="Buddies"
-                component={BuddiesScreen}
-                options={{ headerShown: false }}
+              name="Buddies"
+              component={BuddiesScreen}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="AddBuddies"
-                component={AddBuddiesScreen}
-                options={{ headerShown: false }} 
-            />
-             <Stack.Screen
-                name="AddCharacter"
-                component={AddCharacterScreen}
-                options={{ headerShown: false }} 
+              name="AddBuddies"
+              component={AddBuddiesScreen}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="SendChallenge"
-                component={SendChallengeScreen}
-                options={{ headerShown: false }} 
+              name="AddCharacter"
+              component={AddCharacterScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="SendChallenge"
+              component={SendChallengeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EditTask"
+              component={EditTaskScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EditHabit"
+              component={EditHabitScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EditRecurrentTask"
+              component={EditRecurrentTaskScreen}
+              options={{ headerShown: false }}
             />
           </>
         ) : (
@@ -147,16 +174,16 @@ function MainNavigator() {
 
 function App() {
   return (
-    
     <AuthContextProvider>
-      <TasksContextProvider>
-      <SuggestionsProvider>
-        <NavigationContainer>
-          <MainNavigator />
-        </NavigationContainer>
-    </SuggestionsProvider>
-
-      </TasksContextProvider>
+      <FriendsContextProvider>
+        <TasksContextProvider>
+          <SuggestionsProvider>
+            <NavigationContainer>
+              <MainNavigator />
+            </NavigationContainer>
+          </SuggestionsProvider>
+        </TasksContextProvider>
+      </FriendsContextProvider>
     </AuthContextProvider>
   );
 }
