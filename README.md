@@ -110,6 +110,22 @@ Prioritized backlog is situated in projects on Github, based on the User Stories
 
 ## Architectural Description
 ### Product Syntesis
+
+Gamify is a mobile application that enables users to manage their daily activities more efficiently, interact with friends, and stay motivated through a gamification system. It combines task management functionalities with social interaction, aiming to boost users' motivation to complete their tasks and to keep their interest in the application for as long as possible.
+
+At the intermediate deliverable, the team has established the following functional objectives for the final deliverable:
+
+- the ability to make an account
+- the ability to manage three different types of tasks to organize work more efficiently.
+- the ability to receive daily tasks suggested by the app
+- the ability to log in
+- the ability to connect with one or more friends
+- the ability to give and receive challenges from buddies
+- the ability to level up my character, based on my achievements and in-app progress
+- the ability to choose the initial appearance of my character
+- the ability to have suggestions that are tailored to my interests
+
+Whilst some of the objectives, like: authentication, login and, the creation of three different tasks(without the possibility to edit or delete them :)))  were already completed at the intermediate deliverable, for the final deliverable we still had many functionalities to implement. Now we can say that we managed to implement all the above-mentioned features, except the ability to level up your character, based on your achievements. We decided to give up on this idea because none of us have previously worked with animation tools and this process would have been a burden given this context. Nevertheless, we still created a feature that increases each character’s stats based on personal accomplishments.
 ### C4 Diagrams
 ### Non-functional Requirements
 <ul>
