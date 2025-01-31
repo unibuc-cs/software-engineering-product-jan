@@ -132,6 +132,13 @@ Whilst some of the objectives, like: authentication, login and, the creation of 
 
 ![image](https://github.com/user-attachments/assets/79d7b4fa-b8e1-48ab-90f4-4ad6d4df426d)
 
+<li> C4 Context Diagram </li>
+<br/>
+
+<img width="712" alt="Screenshot 2025-01-31 at 16 53 42" src="https://github.com/user-attachments/assets/d7be912f-8c5e-42d1-8682-5b8bc69a0e0d" />
+
+
+
 
 ### Non-functional Requirements
 <ul>
