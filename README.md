@@ -127,6 +127,12 @@ At the intermediate deliverable, the team has established the following function
 
 Whilst some of the objectives, like: authentication, login and, the creation of three different tasks(without the possibility to edit or delete them :)))  were already completed at the intermediate deliverable, for the final deliverable we still had many functionalities to implement. Now we can say that we managed to implement all the above-mentioned features, except the ability to level up your character, based on your achievements. We decided to give up on this idea because none of us have previously worked with animation tools and this process would have been a burden given this context. Nevertheless, we still created a feature that increases each character’s stats based on personal accomplishments.
 ### C4 Diagrams
+<li> C4 Container Diagram </li>
+<br/>
+
+![image](https://github.com/user-attachments/assets/79d7b4fa-b8e1-48ab-90f4-4ad6d4df426d)
+
+
 ### Non-functional Requirements
 <ul>
   <li> Load a user’s tasks within one second. </li>
