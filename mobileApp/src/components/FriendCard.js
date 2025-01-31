@@ -16,7 +16,7 @@ export default function FriendCard({ title, description, stats, friend }) {
                     <Image 
                       style = {style.avatar} 
                       resizeMode = "contain"
-                      source = {require('../../assets/character.png')}
+                      source = {require('../../assets/boy.png')}
                     />
                     <Text style = {style.name}> {friend.name} </Text>
                   </View>

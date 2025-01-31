@@ -44,7 +44,7 @@ export default function FriendProfile({ friend, anySelected }) {
               <View style={styles.left}>
                 <Image
                   style={styles.avatar}
-                  source={require("../../assets/character.png")} // TODO: replace with friend's character
+                  source={require("../../assets/boy.png")} // TODO: replace with friend's character
                 />
               </View>
               <View style={styles.right}>

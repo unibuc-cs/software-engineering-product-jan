@@ -11,7 +11,7 @@ export default function FriendRoundCard({friend, color}) {
             <Image 
               style = {styles.avatar} 
               resizeMode = "contain"
-              source = {require('../../assets/character.png')} // TODO: replace with friend's character
+              source = {require('../../assets/boy.png')} // TODO: replace with friend's character
             />
             <Text style = {styles.name}> {friend.name} </Text>
         </View>

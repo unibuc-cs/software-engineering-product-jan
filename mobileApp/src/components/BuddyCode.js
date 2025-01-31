@@ -4,6 +4,8 @@ import {
 	Text,
 } from "react-native";
 
+const code = 'XTDHWIUDHUWI';
+
 export default function BuddyCode() {
 
     return (
