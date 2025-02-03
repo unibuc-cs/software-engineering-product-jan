@@ -9,6 +9,9 @@
     "logs": "firebase functions:log",
     "dev": "nodemon server.js"
   },
+  "jest": {
+  "preset": "react-native"
+},
   "engines": {
     "node": "20"
   },
